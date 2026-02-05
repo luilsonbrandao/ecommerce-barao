@@ -2,7 +2,7 @@
 
 ## Introdução
 
-O mercado de estética automotiva (Lava-jatos) muitas vezes carece de ferramentas digitais que permitam ao cliente conhecer o catálogo de serviços detalhado e realizar contratações de forma simples. Este projeto visa preencher essa lacuna para o **Lava-Jato Barão**..
+O mercado de estética automotiva (Lava a jato) muitas vezes carece de ferramentas digitais que permitam ao cliente conhecer o catálogo de serviços detalhado e realizar contratações de forma simples. Este projeto visa preencher essa lacuna para o **Lava a Jato Barão**..
 
 ## Problema (Dores do Cliente)
 

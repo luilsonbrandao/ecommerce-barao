@@ -1,10 +1,11 @@
-# 🚿 Barão Lava-Jato | Ecommerce & Gestão
+# 🚿 Barão Lava a Jato | Ecommerce & Gestão
 
 > **Status do Projeto:** 🚧 Em Desenvolvimento (Back-end)
 
-Sistema de Ecommerce e Gestão desenvolvido sob medida para o **Lava-Jato Barão**. O objetivo é digitalizar a oferta de serviços (lavagens, polimentos, higienização) e venda de produtos automotivos, permitindo que o proprietário gerencie pedidos e clientes em uma plataforma única.
+Sistema de Ecommerce e Gestão desenvolvido sob medida para o **Lava a Jato Barão**. O objetivo é digitalizar a oferta de serviços (lavagens, polimentos, higienização) e venda de produtos automotivos, permitindo que o proprietário gerencie pedidos e clientes em uma plataforma única.
 
 ## 💼 O Cliente
+
 **Tonyelson Santos da Silva**, proprietário do Lava-Jato Barão.
 O sistema visa profissionalizar o atendimento, saindo do controle manual para uma gestão digitalizada de serviços e fluxo financeiro.
 
@@ -21,14 +22,32 @@ O sistema visa profissionalizar o atendimento, saindo do controle manual para um
 
 - [x] **API RESTful** estruturada em camadas (MVC).
 - [x] **Gestão de Categorias** (Ex: Lavagens, Estética, Acessórios).
-- [ ] **Catálogo de Serviços e Produtos** com upload de fotos.
+- [x] **Catálogo de Serviços e Produtos** (Back-end implementado).
+- [ ] **Upload de Fotos** (Próximo passo).
 - [ ] **Carrinho de Compras** (Agendamento de serviços/Compra de produtos).
 - [ ] **Gestão de Pedidos** e Status (Aguardando, Em andamento, Finalizado).
 - [ ] **Dashboard Administrativo** para o Tonyelson.
+
+# Documentação
+
+<ol>
+<li><a href="documentos/01-Documentação de Contexto.md"> Documentação de Contexto</a></li>
+<li><a href="documentos/02-Especificação do Projeto.md"> Especificação do Projeto</a></li>
+<li><a href="documentos/03-Projeto de Interface.md"> Projeto de Interface</a></li>
+<li><a href="documentos/04-Testes de Software.md"> Testes de Software</a></li>
+<li><a href="documentos/05-Implantação.md"> Implantação</a></li>
+</ol>
+
+# Código
+
+<li><a href="codigo-fonte/README.md"> Código Fonte</a></li>
+
+# Apresentação
+
+<li><a href="apresentacao/README.md"> Apresentação da solução</a></li>
+
 
 ## 👨‍💻 Autor & Desenvolvedor
 
 Desenvolvido por **Luilson Brandão**.
 
----
-*Projeto pessoal para fins de portfólio e aplicação real.*
