@@ -40,7 +40,7 @@ O sistema visa profissionalizar o atendimento, saindo do controle manual para um
 
 # Código
 
-<li><a href="codigo-fonte/README.md"> Código Fonte</a></li>
+<li><a href="codigo-fonte"> Código Fonte</a></li>
 
 # Apresentação
 
