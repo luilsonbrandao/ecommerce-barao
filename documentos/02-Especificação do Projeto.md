@@ -97,6 +97,10 @@ Tabela associativa que armazena os produtos de cada pedido.
 | id_pedido      | INT    | FK (Ref. tbl_pedido)                    |
 | id_produto     | INT    | FK (Ref. tbl_produto)                   |
 
+### Diagrama Entidade-Relacionamento (DER)
+
+![Diagrama do Banco de Dados](img/modelo-dados.png)
+
 ## Restrições
 
 | ID | Restrição                                             |
