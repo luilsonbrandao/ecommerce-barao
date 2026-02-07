@@ -23,9 +23,10 @@ O sistema visa profissionalizar o atendimento, saindo do controle manual para um
 - [x] **API RESTful** estruturada em camadas (MVC).
 - [x] **Gestão de Categorias** (Ex: Lavagens, Estética, Acessórios).
 - [x] **Catálogo de Serviços e Produtos** (Back-end implementado).
-- [ ] **Upload de Fotos** (Próximo passo).
-- [ ] **Carrinho de Compras** (Agendamento de serviços/Compra de produtos).
-- [ ] **Gestão de Pedidos** e Status (Aguardando, Em andamento, Finalizado).
+- [x] **Gestão de Clientes** (Cadastro e consulta).
+- [x] **Processamento de Pedidos** (Cálculo de valores, regra de desconto em atacado e persistência).
+- [ ] **Upload de Fotos** (Infraestrutura desenhada, falta implementar no Java).
+- [ ] **Carrinho de Compras** (Front-end).
 - [ ] **Dashboard Administrativo** para o Tonyelson.
 
 # Documentação

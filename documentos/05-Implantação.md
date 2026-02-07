@@ -17,8 +17,15 @@ A arquitetura resolve o upload em duas etapas (Two-Step Upload) para evitar garg
 * **Performance:** O banco de dados não fica inchado com BLOBs (arquivos binários).
 * **Escalabilidade:** Permite migrar o armazenamento futuramente para serviços de nuvem (como AWS S3) sem alterar a lógica do banco de dados.
 
-•	Apresentar o planejamento da implantação: descrever tecnologias e processo de implantação.
+## Planejamento de Evolução e Deploy
 
-•	Informar link da aplicação em ambiente de produção
+### Ambiente de Produção (Futuro)
+A aplicação está planejada para ser hospedada em nuvem seguindo a seguinte estratégia:
 
-•	Apresentar o planejamento de evolução da aplicação.
+* **PaaS (Platform as a Service):** Deploy da API Java no **Render** ou **Railway** (Dockerizado).
+* **Banco de Dados:** MySQL gerenciado (ex: Clever Cloud ou AWS RDS).
+* **Front-end:** Hospedagem estática no Vercel ou Netlify.
+
+### Link da Aplicação
+* **Ambiente de Desenvolvimento:** `http://localhost:8080` (Acessível apenas localmente via API Client).
+* **Ambiente de Produção:** *Em breve*

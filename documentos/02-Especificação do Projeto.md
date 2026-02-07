@@ -55,6 +55,48 @@ Armazena tanto serviços (mão de obra) quanto produtos físicos.
 | disponivel      | INT           | 1 (Sim) / 0 (Não)             |
 | id_categoria    | INT           | FK (Ref. tbl_categoria)       |
 
+### Tabela: `tbl_cliente`
+Armazena os dados dos clientes do Lava-Jato.
+
+| Campo            | Tipo         | Detalhes                      |
+| ---------------- | ------------ | ----------------------------- |
+| id_cliente       | INT          | PK, Auto Increment            |
+| nome_cliente     | VARCHAR(100) | Not Null                      |
+| email_cliente    | VARCHAR(100) | Unique, Not Null              |
+| telefone_cliente | VARCHAR(20)  | Unique, Not Null              |
+| cpf_cliente      | VARCHAR(15)  | Opcional                      |
+| data_nasc        | DATE         | Opcional                      |
+| cep_cliente      | VARCHAR(10)  | Endereço                      |
+| logradouro       | VARCHAR(100) | Endereço                      |
+| cidade           | VARCHAR(100) | Endereço                      |
+| estado           | VARCHAR(2)   | Endereço                      |
+
+### Tabela: `tbl_pedido`
+Registra os cabeçalhos dos pedidos realizados.
+
+| Campo        | Tipo    | Detalhes                                        |
+| ------------ | ------- | ----------------------------------------------- |
+| id_pedido    | INT     | PK, Auto Increment                              |
+| data_pedido  | DATE    | Data da solicitação                             |
+| valor_total  | DOUBLE  | Valor calculado (Soma dos itens - Descontos)    |
+| valor_frete  | DOUBLE  | Custo de entrega                                |
+| retirar      | INT     | 1 (Retirar no local) / 0 (Delivery)             |
+| status       | INT     | 1=Novo, 2=Pago, 3=Transporte, 4=Entregue...     |
+| observacoes  | TEXT    | Notas do cliente                                |
+| id_cliente   | INT     | FK (Ref. tbl_cliente)                           |
+
+### Tabela: `tbl_itempedido`
+Tabela associativa que armazena os produtos de cada pedido.
+
+| Campo          | Tipo   | Detalhes                                |
+| -------------- | ------ | --------------------------------------- |
+| num_seq        | INT    | PK, Auto Increment                      |
+| qtde_item      | INT    | Quantidade solicitada                   |
+| preco_unitario | DOUBLE | Preço do produto no momento da compra   |
+| preco_total    | DOUBLE | (Qtde * Unitario) com possível desconto |
+| id_pedido      | INT    | FK (Ref. tbl_pedido)                    |
+| id_produto     | INT    | FK (Ref. tbl_produto)                   |
+
 ## Restrições
 
 | ID | Restrição                                             |
