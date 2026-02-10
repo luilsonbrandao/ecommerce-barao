@@ -25,7 +25,7 @@ O sistema visa profissionalizar o atendimento, saindo do controle manual para um
 - [x] **Catálogo de Serviços e Produtos** (Back-end implementado).
 - [x] **Gestão de Clientes** (Cadastro e consulta).
 - [x] **Processamento de Pedidos** (Cálculo de valores, regra de desconto em atacado e persistência).
-- [ ] **Upload de Fotos** (Infraestrutura desenhada, falta implementar no Java).
+- [x] **Upload de Fotos** (Infraestrutura desenhada, falta implementar no Java).
 - [ ] **Carrinho de Compras** (Front-end).
 - [ ] **Dashboard Administrativo** para o Tonyelson.
 

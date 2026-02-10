@@ -10,6 +10,7 @@ A solução segue o padrão de **API RESTful** com arquitetura em camadas, garan
 * **Framework:** Spring Boot 3
 * **Persistência:** Spring Data JPA / MySQL 8
 * **Dependências:** Maven
+* **Segurança:** Spring Security + JWT
 
 ## Requisitos do Sistema
 
@@ -26,13 +27,35 @@ A solução segue o padrão de **API RESTful** com arquitetura em camadas, garan
 
 ### Requisitos Não Funcionais (RNF)
 
-| ID      | Descrição do Requisito                                                               | Prioridade |
+| ID      | Descrição do Requisito                                                                   | Prioridade |
 | ------- | ------------------------------------------------------------------------------------ | ---------- |
 | RNF-001 | **Segurança:** As senhas dos usuários devem ser criptografadas no banco.             | ALTA       |
 | RNF-002 | **Performance:** A listagem de serviços deve carregar em menos de 2 segundos.        | MÉDIA      |
 | RNF-003 | **Responsividade:** O sistema (Front-end) deve funcionar perfeitamente em celulares. | ALTA       |
 
+## Arquitetura de Segurança
+
+A API utiliza o padrão **Stateless** com **JWT (JSON Web Token)**. Não há sessão no servidor; a autenticação é validada a cada requisição via cabeçalho HTTP.
+
+![Arquitetura de Segurança](img/arquitetura-seguranca.png)
+
+### Fluxo de Autenticação:
+1.  **Login:** O cliente envia `usuario` e `senha`. Se válido, a API retorna um Token JWT assinado contendo ID, Nome e Email (Claims).
+2.  **Acesso:** Para acessar rotas protegidas (ex: `/pedidos`), o cliente deve enviar o cabeçalho: `Authorization: Bearer <TOKEN>`.
+
 ## Modelo de Dados (Em Evolução)
+
+### Tabela: `tbl_usuario`
+Responsável pelo controle de acesso (Login/Senha) e perfil administrativo.
+
+| Campo           | Tipo         | Detalhes                      |
+| --------------- | ------------ | ----------------------------- |
+| id_usuario      | INT          | PK, Auto Increment            |
+| nome_usuario    | VARCHAR(50)  | Nome de exibição              |
+| email           | VARCHAR(50)  | Unique, Not Null              |
+| username        | VARCHAR(45)  | Unique (Login do Sistema)     |
+| senha           | VARCHAR(100) | Hash criptografado (BCrypt)   |
+| usuario_ativo   | INT          | 1 (Ativo) / 0 (Inativo)       |
 
 ### Tabela: `tbl_categoria`
 Responsável por agrupar os tipos de serviços.
