@@ -1,12 +1,12 @@
 # 🚿 Barão Lava a Jato | Ecommerce & Gestão
 
-> **Status do Projeto:** 🚧 Em Desenvolvimento (Back-end)
+> **Status do Projeto:** 🚧 Em Desenvolvimento (Integração Front/Back)
 
 Sistema de Ecommerce e Gestão desenvolvido sob medida para o **Lava a Jato Barão**. O objetivo é digitalizar a oferta de serviços (lavagens, polimentos, higienização) e venda de produtos automotivos, permitindo que o proprietário gerencie pedidos e clientes em uma plataforma única.
 
 ## 💼 O Cliente
 
-**Tonyelson Santos da Silva**, proprietário do Lava-Jato Barão.
+**Tonyelson Santos da Silva**, proprietário do Lava a Jato Barão.
 O sistema visa profissionalizar o atendimento, saindo do controle manual para uma gestão digitalizada de serviços e fluxo financeiro.
 
 ## 🚀 Tecnologias (Stack)
@@ -14,7 +14,7 @@ O sistema visa profissionalizar o atendimento, saindo do controle manual para um
 * **Back-end:** Java 17 (LTS), Spring Boot 3.5.10
 * **Banco de Dados:** MySQL 8
 * **Segurança:** Spring Security + JWT (Em breve)
-* **Front-end Loja:** Angular (Planejado)
+* **Front-end Loja:** Angular 19 (Standalone Components) - *Em Desenvolvimento*
 * **Front-end Admin:** Angular (Planejado)
 * **Infra:** Docker (Planejado)
 
@@ -26,6 +26,7 @@ O sistema visa profissionalizar o atendimento, saindo do controle manual para um
 - [x] **Gestão de Clientes** (Cadastro e consulta).
 - [x] **Processamento de Pedidos** (Cálculo de valores, regra de desconto em atacado e persistência).
 - [x] **Upload de Fotos** (Infraestrutura desenhada, falta implementar no Java).
+- [x] **Vitrine Virtual** (Front-end: Home e Detalhes implementados).
 - [ ] **Carrinho de Compras** (Front-end).
 - [ ] **Dashboard Administrativo** para o Tonyelson.
 
@@ -51,4 +52,3 @@ O sistema visa profissionalizar o atendimento, saindo do controle manual para um
 ## 👨‍💻 Autor & Desenvolvedor
 
 Desenvolvido por **Luilson Brandão**.
-
