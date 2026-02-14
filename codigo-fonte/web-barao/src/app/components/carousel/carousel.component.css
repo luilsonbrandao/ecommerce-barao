@@ -1,0 +1,14 @@
+/* No seu arquivo de estilos global ou do componente */
+.carousel-item img {
+    width: 100%;             /* Ocupa toda a largura disponível */
+    height: 500px;           /* Altura fixa (ajuste conforme necessário) */
+    object-fit: cover;       /* A mágica: corta o excesso sem esticar a foto */
+    object-position: center; /* Centraliza a imagem no corte */
+}
+
+/* Responsividade para Celulares (opcional, mas recomendado) */
+@media (max-width: 768px) {
+    .carousel-item img {
+        height: 250px;       /* Altura menor para telas pequenas */
+    }
+}

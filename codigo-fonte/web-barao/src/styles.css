@@ -1,1 +1,11 @@
-/* You can add global styles to this file, and also import other style files */
+/* Garante que o corpo da página ocupe pelo menos 100% da altura da tela */
+html, body {
+  height: 100%;
+}
+
+/* Transforma o app-root em um contêiner flexível empilhando os itens */
+app-root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
