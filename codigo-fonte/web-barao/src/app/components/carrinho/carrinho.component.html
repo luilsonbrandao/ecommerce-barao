@@ -1,0 +1,86 @@
+<div class="container mt-5 mb-5">
+
+  <div class="row mb-4">
+    <div class="col-12 text-center">
+      <h2 class="fw-bold text-uppercase">Seu Carrinho</h2>
+      <div class="div-decorativa mx-auto"></div> </div>
+  </div>
+
+  @if (pedido.itensPedido.length === 0) {
+    <div class="row text-center py-5">
+      <div class="col-12">
+        <i class="bi bi-cart-x display-1 text-muted"></i>
+        <h3 class="mt-3 text-muted">Seu carrinho está vazio!</h3>
+        <a routerLink="/" class="btn btn-outline-primary mt-3">
+          Ver Produtos
+        </a>
+      </div>
+    </div>
+  }
+
+  @else {
+    <div id="itens">
+
+      <div class="row fw-bold border-bottom pb-2 mb-3 d-none d-md-flex">
+        <div class="col-md-2">Foto</div>
+        <div class="col-md-4">Produto</div>
+        <div class="col-md-2 text-center">Unitário</div>
+        <div class="col-md-2 text-center">Qtd</div>
+        <div class="col-md-2 text-center">Total</div>
+      </div>
+
+      @for (item of pedido.itensPedido; track item.produto.id) {
+        <div class="row itemPedido align-items-center py-3 border-bottom">
+
+          <div class="col-4 col-md-2">
+            <img [src]="item.produto.linkFoto" class="img-fluid rounded" [alt]="item.produto.nome">
+          </div>
+
+          <div class="col-8 col-md-4">
+            <h5 class="mb-1">{{ item.produto.nome }}</h5>
+            <button class="btn btn-sm btn-link text-danger p-0 text-decoration-none"
+                    (click)="removerItem(item.produto.id)">
+              <i class="bi bi-trash"></i> Remover
+            </button>
+          </div>
+
+          <div class="col-6 col-md-2 text-center mt-3 mt-md-0">
+            <small class="d-md-none text-muted">Unit: </small>
+            {{ item.precoUnitario | currency:'BRL' }}
+          </div>
+
+          <div class="col-6 col-md-2 text-center mt-3 mt-md-0 fw-bold">
+            <small class="d-md-none text-muted">Qtd: </small>
+            {{ item.qtdeItem }}
+          </div>
+
+          <div class="col-12 col-md-2 text-center mt-3 mt-md-0 fw-bold text-primary">
+             {{ item.precoTotal | currency:'BRL' }}
+          </div>
+
+        </div>
+      }
+
+      <div class="row mt-4">
+        <div class="col-12 text-end">
+          <h4 class="fw-bold">
+            Total: <span class="text-dark fw-bold">{{ pedido.valorTotal | currency:'BRL' }}</span>          </h4>
+        </div>
+      </div>
+
+      <div class="row mt-5">
+        <div class="col-md-6 mb-3">
+          <a routerLink="/" class="btn btn-outline-secondary w-100 btn-lg">
+            <i class="bi bi-arrow-left"></i> Continuar Comprando
+          </a>
+        </div>
+        <div class="col-md-6">
+          <button (click)="efetivarCompra()" class="btn btn-primary w-100 btn-lg fw-bold">
+            Finalizar Compra <i class="bi bi-check-lg"></i>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  }
+</div>

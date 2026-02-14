@@ -1,24 +1,61 @@
-<nav class="navbar navbar-expand-lg bg-dark border-bottom border-body" data-bs-theme="dark">
+<nav
+  class="navbar navbar-expand-lg bg-dark border-bottom border-body"
+  data-bs-theme="dark"
+>
   <div class="container">
-
     <a class="navbar-brand" routerLink="/">
-      <img src="/img/logo.png" alt="logobarao" width="60" height="54" class="d-inline-block align-text-top" />
+      <img
+        src="/img/logo.png"
+        alt="logobarao"
+        width="60"
+        height="54"
+        class="d-inline-block align-text-top"
+      />
     </a>
 
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <div class="d-flex ms-auto order-lg-last align-items-center">
+      <a
+        class="nav-link position-relative me-3 me-lg-0 ms-lg-4"
+        routerLink="/carrinho"
+        style="font-size: 1.4rem"
+      >
+        <i class="bi bi-cart4 text-white"></i>
+
+        <span
+          class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+          style="font-size: 0.6rem"
+        >
+          {{ qtdItens }}
+          <span class="visually-hidden">itens no carrinho</span>
+        </span>
+      </a>
+    </div>
+
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
       <span class="navbar-toggler-icon"></span>
     </button>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <a
+            class="nav-link dropdown-toggle"
+            href="#"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
             Categorias
           </a>
           <ul class="dropdown-menu">
-
             @for (cat of listaCategorias; track cat.id) {
               <li>
                 <a class="dropdown-item" [routerLink]="['/categoria', cat.id]">
@@ -26,38 +63,30 @@
                 </a>
               </li>
             }
-
             @if (listaCategorias.length === 0) {
-               <li><span class="dropdown-item disabled">Carregando...</span></li>
+              <li><span class="dropdown-item disabled">Carregando...</span></li>
             }
-
           </ul>
         </li>
       </ul>
 
-      <form class="d-flex" role="search">
+      <form
+        class="d-flex mt-3 mt-lg-0"
+        role="search"
+        style="width: 100%; max-width: 400px"
+      >
         <div class="input-group">
-          <input class="form-control" type="search" placeholder="Encontre seu produto..." aria-label="Buscar" />
-
-          <button class="btn btn-secondary" type="submit" title="Buscar" aria-label="Buscar">
+          <input
+            class="form-control"
+            type="search"
+            placeholder="Encontre seu produto..."
+            aria-label="Buscar"
+          />
+          <button class="btn btn-secondary" type="submit" title="Buscar">
             <i class="bi bi-search"></i>
           </button>
         </div>
       </form>
-
-      <ul class="navbar-nav ms-lg-4">
-        <li class="nav-item">
-          <a class="nav-link position-relative d-flex align-items-center" routerLink="/carrinho" style="font-size: 1.4rem;">
-            <i class="bi bi-cart4 text-btn-secondary"></i>
-
-            <span class="position-absolute top-25 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 0.6rem;">
-              0 <span class="visually-hidden">itens no carrinho</span>
-            </span>
-
-          </a>
-        </li>
-      </ul>
-
     </div>
   </div>
 </nav>

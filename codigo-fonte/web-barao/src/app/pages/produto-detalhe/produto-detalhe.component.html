@@ -11,20 +11,27 @@
 
     <div class="col-md-6">
       <h1 class="display-5 fw-bold">{{ produto.nome }}</h1>
-      <h3 class="text-primary my-3">R$ {{ produto.preco | number:'1.2-2' }}</h3>
 
+      <h3 class="text-primary my-3">R$ {{ produto.preco | number:'1.2-2' }}</h3>
       <p class="lead text-muted">{{ produto.detalhe }}</p>
 
       <hr class="my-4">
 
+      <div class="mb-3" style="max-width: 150px;">
+        <label for="qtd" class="form-label fw-bold">Quantidade:</label>
+        <input type="number" id="qtd" class="form-control" [(ngModel)]="quantidade" min="1" max="99">
+      </div>
+
       <div class="d-grid gap-2">
         <button class="btn btn-success btn-lg">
-          <i class="bi bi-whatsapp"></i> Agendar Agora
+          <i class="bi bi-whatsapp"></i> Agendar via WhatsApp
         </button>
-        <button class="btn btn-outline-primary">
-          Adicionar ao Carrinho
+
+        <button class="btn btn-outline-primary btn-lg" (click)="adicionarCarrinho()">
+          <i class="bi bi-cart-plus"></i> Adicionar ao Carrinho
         </button>
       </div>
+
     </div>
   </div>
 </div>

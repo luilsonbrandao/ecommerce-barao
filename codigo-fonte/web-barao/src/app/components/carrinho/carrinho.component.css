@@ -1,0 +1,20 @@
+/* Efeito suave ao passar o mouse no item */
+.itemPedido:hover {
+    background-color: #f8f9fa; /* Cinza bem clarinho */
+}
+
+/* Garante que a linha decorativa (amarela) apareça */
+.div-decorativa {
+    width: 80px;
+    height: 4px;
+    background-color: #FFC107;
+    margin-top: 10px;
+    border-radius: 2px;
+}
+
+/* Ajuste mobile para não colar as informações */
+@media (max-width: 768px) {
+    .row.itemPedido {
+        text-align: left;
+    }
+}
