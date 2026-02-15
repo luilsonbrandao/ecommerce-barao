@@ -22,11 +22,11 @@
     <div id="itens">
 
       <div class="row fw-bold border-bottom pb-2 mb-3 d-none d-md-flex">
-        <div class="col-md-2">Foto</div>
-        <div class="col-md-4">Produto</div>
-        <div class="col-md-2 text-center">Unitário</div>
-        <div class="col-md-2 text-center">Qtd</div>
-        <div class="col-md-2 text-center">Total</div>
+
+        <div class="col-md-6">Produto</div>
+        <div class="col-md-2 text-center">Preço</div>
+        <div class="col-md-2 text-center">Quantidade</div>
+        <div class="col-md-2 text-center">Subtotal</div>
       </div>
 
       @for (item of pedido.itensPedido; track item.produto.id) {

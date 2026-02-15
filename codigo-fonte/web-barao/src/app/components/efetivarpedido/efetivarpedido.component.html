@@ -1,0 +1,174 @@
+<div class="modal fade" tabindex="-1" id="modalError">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Erro no Formulário</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>{{ mensagemErro }}</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<button id="btnModal" type="button" class="btn btn-primary" data-bs-toggle="modal"
+        data-bs-target="#modalError"></button>
+
+
+<div class="container">
+    <div id="divBusca" class="row">
+        <div class="col-xs-8 col-sm-8 col-md-9 col-lg-10 col-xl-10">
+            <div class="mb-1">
+                <label for="txtTelefone" class="form-label">Seu <b>Whatsapp</b></label>
+                <input type="text" class="form-control" id="txtTelefone" placeholder="Digite seu telefone com DDD"
+                    [(ngModel)]="cliente.telefone">
+
+
+            </div>
+        </div>
+        <div class="col-xs-4 col-sm-4 col-md-3 col-lg-2 col-xl-2">
+            <button type="button" id="btnBuscar" (click)="buscarCliente()" class="btn btn-primary mb-3">Buscar</button>
+        </div>
+
+    </div>
+
+    <div id="divDetalhes" *ngIf="visivel">
+        <div class="row" *ngIf="achou == false">
+            <div class="col-12">
+                <div class="alert alert-primary fade show" role="alert">
+                    <strong>Bem vinda(o)!</strong> Você é recente por aqui!
+                    <button type="button" class="btn-close" (click)="ocultaAlert()"></button>
+                </div>
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="txtNome" class="form-label">Seu Nome</label>
+            <input type="text" class="form-control" id="txtNome" [(ngModel)]="cliente.nome" placeholder="Digite seu nome completo">
+        </div>
+        <div class="mb-3">
+            <label for="txtEmail" class="form-label">Seu Email</label>
+            <input type="text" class="form-control" id="txtEmail" [(ngModel)]="cliente.email">
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                <div class="mb-3">
+                    <label for="txtCpf" class="form-label">Seu CPF</label>
+                    <input type="text" class="form-control" placeholder="Não é obrigatório" id="txtCpf"
+                        [(ngModel)]="cliente.cpf">
+
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                <div class="mb-3">
+                    <label for="txtDataNasc" class="form-label">Data de Nascimento</label>
+                    <input type="date" class="form-control" inputmode="numeric" id="txtDataNasc"
+                        [(ngModel)]="cliente.dataNasc">
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row mb-3" id="divPergunta" *ngIf="exibirPerguntaEndereco">
+            <div class="col-12 mb-3">
+                <h4>Seu Endereço {{ msgEndereco }} continua o mesmo? </h4>
+            </div>
+            <div class="col-6 text-center">
+                <button type="button" class="btn btn-primary" (click)="ocultarForm()">Sim</button>
+
+            </div>
+            <div class="col-6 text-center">
+                <button type="button" class="btn btn-primary" (click)="exibirForm()">Não</button>
+            </div>
+        </div>
+
+        <div *ngIf="exibirFormEndereco">
+            <div class="row">
+                <div class="col-xs-8 col-sm-8 col-md-9 col-lg-10 col-xl-10">
+                    <div class="mb-3">
+                        <label for="txtCep" class="form-label">Cep da sua residência</label>
+                        <input type="text" class="form-control" id="txtCep" [(ngModel)]="cliente.cep"
+                            placeholder="Informe sem pontos ou traços">
+                    </div>
+                </div>
+                <div class="col-xs-4 col-sm-4 col-md-3 col-lg-2 col-xl-2">
+                    <button type="button" id="btnCep" (click)="buscarCEP()" class="btn btn-primary">Buscar CEP</button>
+                </div>
+
+            </div>
+
+            <div class="mb-3">
+                <label for="txtLogradouro" class="form-label">Logradouro</label>
+                <input type="text" class="form-control" id="txtLogradouro" [(ngModel)]="cliente.logradouro">
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <div class="mb-3">
+                        <label for="txtNumero" class="form-label">Numero</label>
+                        <input type="text" class="form-control" id="txtNumero" [(ngModel)]="cliente.numero">
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="mb-3">
+                        <label for="txtComplemento" class="form-label">Complemento</label>
+                        <input type="text" class="form-control" id="txtComplemento" [(ngModel)]="cliente.complemento">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+
+                <div class="col-6">
+                    <div class="mb-3">
+                        <label for="txtBairro" class="form-label">Bairro</label>
+                        <input type="text" class="form-control" id="txtBairro" [(ngModel)]="cliente.bairro">
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="mb-3">
+                        <label for="txtCidade" class="form-label">Cidade</label>
+                        <input type="text" class="form-control" id="txtCidade" [(ngModel)]="cliente.cidade">
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="mb-3">
+                        <label for="txtEstado" class="form-label">UF</label>
+                        <input type="text" class="form-control" id="txtEstado" [(ngModel)]="cliente.estado">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 mb-3 form-control" id="divFrete">
+                <p><b>Frete Previsto: {{msgFrete}}  </b> </p>
+                <div class="form-check form-switch">
+                    <label for="chkRetirar">Prefiro Retirar</label>
+                    <input class="form-check-input" type="checkbox" id="chkRetirar" [(ngModel)]="retirar" (change)="calculaFreteReal()">
+                </div>
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="txtObservacao" class="form-label">Observações do seu Pedido</label>
+            <input type="text" class="form-control" [(ngModel)]="pedido.observacoes" id="txtObservacao"
+                placeholder="Informe se você tem preferência de horário ou alguma outra restrição na entrega">
+        </div>
+
+        <div class="row mb-3" *ngIf="!exibirPerguntaEndereco">
+
+            <div class="col-12 text-center">
+
+                <button *ngIf="!emProcessamento" type="button" class="btn btn-primary"
+                    (click)="finalizarPedido()">Finalizar Pedido</button>
+                <span id="loading" *ngIf="emProcessamento"></span>
+                <span id="processando" *ngIf="emProcessamento">
+                    <h4>Processando Pedido</h4>
+                </span>
+            </div>
+        </div>
+
+
+
+    </div>
+</div>

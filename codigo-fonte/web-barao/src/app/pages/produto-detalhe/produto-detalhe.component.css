@@ -1,0 +1,93 @@
+
+/* 1. PREÇO (Destaque e Cor) */
+h3.text-primary {
+    color: #212529 !important; /* Substitui o azul por Preto Forte */
+    font-weight: 800;          /* Extra Negrito */
+    font-size: 2.5rem;         /* Maior destaque */
+    letter-spacing: -1px;
+}
+
+/* 2. INPUT DE QUANTIDADE (Clean & Moderno) */
+.form-control {
+    background-color: #fff;
+    border: 2px solid #e9ecef; /* Borda mais grossa */
+    color: #212529;
+    font-weight: 700;
+    text-align: center;        /* Número centralizado */
+    height: 50px;              /* Mais alto para facilitar o clique */
+    font-size: 1.2rem;
+    border-radius: 8px;
+}
+
+.form-control:focus {
+    border-color: #FFC107;     /* Foco Amarelo */
+    box-shadow: 0 0 0 0.25rem rgba(255, 193, 7, 0.25);
+}
+
+/* Label "Quantidade" */
+.form-label {
+    color: #6c757d;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+}
+
+/* 3. BOTÃO WHATSAPP (Verde, mas no padrão visual) */
+.btn-success {
+    background-color: #25D366; /* Verde Oficial WhatsApp */
+    border-color: #25D366;
+    color: #fff;
+    font-weight: 700;
+    text-transform: uppercase;
+    padding: 12px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.btn-success:hover {
+    background-color: #128C7E;
+    border-color: #128C7E;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+}
+
+/* 4. BOTÃO ADICIONAR AO CARRINHO (Outline Premium) */
+.btn-outline-primary {
+    color: #212529;
+    border: 2px solid #212529; /* Borda preta grossa */
+    font-weight: 700;
+    text-transform: uppercase;
+    padding: 12px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.btn-outline-primary:hover {
+    background-color: #FFC107; /* Fundo Amarelo */
+    border-color: #FFC107;     /* Borda Amarela */
+    color: #000;               /* Texto Preto */
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(255, 193, 7, 0.4);
+}
+
+/* 5. BOTÃO VOLTAR */
+.btn-outline-secondary {
+    border-color: #dee2e6;
+    color: #6c757d;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+}
+
+.btn-outline-secondary:hover {
+    background-color: #212529; /* Fundo Preto */
+    border-color: #212529;
+    color: #FFC107;            /* Texto Amarelo */
+}
+
+/* 6. LOADING SPINNER */
+.spinner-border.text-primary {
+    color: #FFC107 !important; /* Amarelo Barão */
+    width: 3rem;
+    height: 3rem;
+}

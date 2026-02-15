@@ -1,0 +1,16 @@
+{
+  "include": [
+    "src/app/**/*",
+    "angular.json",
+    "package.json",
+    "tsconfig*.json"
+  ],
+  "exclude": [
+    "**/*.spec.ts",
+    "node_modules/**",
+    "dist/**",
+    ".angular/**",
+    ".git/**"
+  ],
+  "respectGitIgnore": true
+}

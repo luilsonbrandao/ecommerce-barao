@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { Pedido } from '../../models/pedido.model';
 import { ItemPedido } from '../../models/item-pedido.model';
-import { CarrinhoService } from '../../services/carrinho.service'; // <--- Importe
+import { CarrinhoService } from '../../services/carrinho.service';
 
 @Component({
   selector: 'app-carrinho',
@@ -15,7 +15,7 @@ import { CarrinhoService } from '../../services/carrinho.service'; // <--- Impor
 export class CarrinhoComponent implements OnInit {
 
   private router = inject(Router);
-  private carrinhoService = inject(CarrinhoService); // <--- INJETE AQUI
+  private carrinhoService = inject(CarrinhoService);
 
   public pedido: Pedido = {
     idPedido: 0,
@@ -49,7 +49,7 @@ export class CarrinhoComponent implements OnInit {
 
     localStorage.setItem("carrinhoBarao", JSON.stringify(this.pedido));
 
-    // <--- ADICIONE ISSO: Atualiza o contador no topo
+    // Atualiza o contador no topo
     this.carrinhoService.atualizarContagem();
   }
 
@@ -64,13 +64,15 @@ export class CarrinhoComponent implements OnInit {
     this.pedido.itensPedido = [];
     this.pedido.valorTotal = 0;
 
-    // <--- ADICIONE ISSO TAMBÉM: Zera o contador
+    // Zera o contador
     this.carrinhoService.atualizarContagem();
   }
 
   public efetivarCompra() {
-    if (this.pedido.itensPedido.length > 0) {
-      alert("Indo para o Checkout (Próxima aula!)");
-    }
+  if (this.pedido.itensPedido.length > 0) {
+    this.router.navigate(['/efetivar-pedido']);
   }
+  
+}
+
 }

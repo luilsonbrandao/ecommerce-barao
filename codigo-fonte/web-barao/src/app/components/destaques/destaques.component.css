@@ -1,6 +1,3 @@
-/* =========================================
-   1. ESTRUTURA DO CARD (Layout & Tamanho)
-   ========================================= */
 
 #destaque {
   margin-top: 3em;
@@ -49,10 +46,6 @@
   font-weight: 600;
 }
 
-
-/* =========================================
-   2. IDENTIDADE VISUAL (Preto & Amarelo)
-   ========================================= */
 
 /* Linha decorativa Amarela */
 .div-decorativa {

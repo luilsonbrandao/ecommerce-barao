@@ -1,0 +1,92 @@
+/* =========================================
+   1. ESTILO GERAL DOS BOTÕES (Identidade Barão)
+   ========================================= */
+
+/* Botão Principal (Amarelo com texto preto) */
+.btn-primary {
+  background-color: #FFC107;
+  border-color: #FFC107;
+  color: #000;
+  font-weight: 700; /* Negrito */
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  padding: 0.5rem 1rem;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+}
+
+/* Efeito Hover (Amarelo mais escuro) */
+.btn-primary:hover, .btn-primary:active, .btn-primary:focus {
+  background-color: #e0a800 !important;
+  border-color: #d39e00 !important;
+  color: #000 !important;
+  box-shadow: 0 4px 10px rgba(255, 193, 7, 0.4); /* Sombra suave */
+}
+
+/* Botões Secundários (Contorno Preto) */
+.btn-outline-primary {
+  color: #212529;
+  border-color: #212529;
+}
+
+.btn-outline-primary:hover {
+  background-color: #212529;
+  color: #FFC107;
+}
+
+/* =========================================
+   2. ELEMENTOS ESPECÍFICOS DO CHECKOUT
+   ========================================= */
+
+/* Ajuste de layout para os botões de busca */
+#btnBuscar, #btnCep {
+    margin-top: 1.9em; /* Alinha visualmente com o input */
+    width: 100%;       /* Ocupa a largura da coluna */
+}
+
+/* Botão invisível para acionar o modal via código */
+#btnModal {
+    visibility: hidden;
+    position: absolute;
+}
+
+/* Caixa de destaque do Frete */
+#divFrete {
+    background-color: rgba(255, 193, 7, 0.8); /* Fundo amarelo semitransparente */
+    color: #000;
+    font-size: 1.1rem; /* Levemente maior */
+    font-weight: bold;
+    border-radius: 6px; /* Cantos arredondados para modernizar */
+    padding: 15px;      /* Espaçamento interno */
+    border: 1px solid #FFC107;
+}
+
+/* =========================================
+   3. ANIMAÇÃO DE LOADING
+   ========================================= */
+
+#loading {
+    display: block;
+    border: 8px solid #f3f3f3; /* Fundo do anel mais fino */
+    border-radius: 50%;
+    border-top: 8px solid #FFC107; /* Parte que gira (Amarela) */
+    width: 80px;  /* Tamanho ajustado */
+    height: 80px;
+    animation: spin 1s linear infinite; /* Rotação mais rápida e fluida */
+    margin: 20px auto;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+#processando {
+    display: block;
+    color: #FFC107;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5); /* Sombra mais suave */
+    margin-top: 10px;
+    letter-spacing: 1px;
+}

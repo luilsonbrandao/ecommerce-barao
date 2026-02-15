@@ -1,3 +1,7 @@
+/* =========================================
+   1. ESTRUTURA E DECORAÇÃO (Mantido)
+   ========================================= */
+
 /* Efeito suave ao passar o mouse no item */
 .itemPedido:hover {
     background-color: #f8f9fa; /* Cinza bem clarinho */
@@ -17,4 +21,59 @@
     .row.itemPedido {
         text-align: left;
     }
+}
+
+/* =========================================
+   2. IDENTIDADE VISUAL BARÃO (Novo)
+   ========================================= */
+
+/* BOTÃO PRINCIPAL ("Finalizar Compra") - Amarelo */
+.btn-primary {
+    background-color: #FFC107;
+    border-color: #FFC107;
+    color: #000;          /* Texto preto */
+    font-weight: 700;     /* Negrito */
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover, .btn-primary:active, .btn-primary:focus {
+    background-color: #e0a800 !important; /* Amarelo mais escuro */
+    border-color: #d39e00 !important;
+    color: #000 !important;
+    box-shadow: 0 4px 10px rgba(255, 193, 7, 0.4);
+}
+
+/* BOTÃO SECUNDÁRIO ("Continuar Comprando") */
+.btn-outline-secondary {
+    color: #212529;
+    border-color: #212529;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+}
+
+.btn-outline-secondary:hover {
+    background-color: #212529;
+    color: #FFC107; /* Fundo preto com texto amarelo */
+}
+
+/* BOTÃO OUTLINE PRIMARY ("Ver Produtos" quando vazio) */
+.btn-outline-primary {
+    color: #212529;
+    border-color: #212529;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.btn-outline-primary:hover {
+    background-color: #212529;
+    color: #FFC107;
+}
+
+/* PREÇOS (Substitui o azul padrão do Bootstrap por Preto/Cinza Escuro) */
+.text-primary {
+    color: #212529 !important;
 }
