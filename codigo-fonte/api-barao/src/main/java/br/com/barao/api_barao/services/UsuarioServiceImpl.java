@@ -2,45 +2,49 @@ package br.com.barao.api_barao.services;
 
 import br.com.barao.api_barao.dao.UsuarioDAO;
 import br.com.barao.api_barao.model.Usuario;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import java.util.List;
 
-@Component
+@Service
+@RequiredArgsConstructor
 public class UsuarioServiceImpl implements IUsuarioService {
 
-    @Autowired
-    private UsuarioDAO dao;
+    private final UsuarioDAO dao;
 
     @Override
     public Usuario recuperarUsuario(Usuario original) {
-
         Usuario user = dao.findByUsernameOrEmail(original.getUsername(), original.getEmail());
-        if (user != null)
+        if (user != null) {
+            // Em produção, use BCrypt para comparar senhas, nunca equals direto em texto plano!
             if (user.getSenha().equals(original.getSenha()) && user.getAtivo() == 1) {
-                user.setSenha(null);
+                user.setSenha(null); // Apaga a senha antes de devolver para o controller
                 return user;
             }
+        }
         return null;
     }
 
     @Override
-    public ArrayList<Usuario> recuperarTodos() {
-        // TODO Auto-generated method stub
-        return (ArrayList<Usuario>) dao.findAll();
+    public List<Usuario> recuperarTodos() {
+        return (List<Usuario>) dao.findAll();
     }
 
     @Override
     public Usuario adicionarNovo(Usuario novo) {
-        if (novo.getUsername().length() > 0 && novo.getNome().length() > 0 && novo.getEmail().length() > 0 && novo.getSenha().length() > 0) {
+        // Validação simples
+        if (novo.getUsername() != null && !novo.getUsername().isEmpty() &&
+                novo.getNome() != null && !novo.getNome().isEmpty() &&
+                novo.getEmail() != null && !novo.getEmail().isEmpty() &&
+                novo.getSenha() != null && !novo.getSenha().isEmpty()) {
+
             novo.setAtivo(1);
             try {
-                dao.save(novo);
-                return novo;
+                return dao.save(novo);
             } catch (Exception ex) {
+                System.err.println("Erro ao adicionar usuário: " + ex.getMessage());
                 ex.printStackTrace();
-                return null;
             }
         }
         return null;
@@ -48,20 +52,19 @@ public class UsuarioServiceImpl implements IUsuarioService {
 
     @Override
     public Usuario atualizarUsuario(Usuario user) {
-        // TODO Auto-generated method stub
         try {
-            dao.save(user);
-            return user;
+            // Verifica se o ID existe antes de salvar (para garantir que é update)
+            if (user.getId() > 0 && dao.existsById(user.getId())) {
+                return dao.save(user);
+            }
+        } catch (Exception ex) {
+            System.err.println("Erro ao atualizar usuário: " + ex.getMessage());
         }
-        catch(Exception ex) {
-            return null;
-        }
+        return null;
     }
 
     @Override
     public Usuario recuperarPeloId(int id) {
-        // TODO Auto-generated method stub
         return dao.findById(id).orElse(null);
     }
-
 }

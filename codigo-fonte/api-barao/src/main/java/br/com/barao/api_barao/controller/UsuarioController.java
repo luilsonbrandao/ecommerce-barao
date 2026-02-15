@@ -1,40 +1,35 @@
 package br.com.barao.api_barao.controller;
 
-
 import br.com.barao.api_barao.model.Usuario;
 import br.com.barao.api_barao.security.JWTToken;
 import br.com.barao.api_barao.security.JWTTokenUtil;
 import br.com.barao.api_barao.services.IUsuarioService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
+import java.util.List;
 
 @RestController
-@CrossOrigin("*")
+@RequiredArgsConstructor // 1. Injeção moderna via construtor
+// @CrossOrigin("*") // 2. Removido (Já está no SecurityConfig)
 public class UsuarioController {
 
-    @Autowired
-    private IUsuarioService service;
+    private final IUsuarioService service; // 'final' é obrigatório para o RequiredArgsConstructor
 
     @PostMapping("/login")
     public ResponseEntity<JWTToken> fazerLogin(@RequestBody Usuario dadosLogin) {
         Usuario user = service.recuperarUsuario(dadosLogin);
-        if (user != null) { // usuario existe, preciso conferir agora a senha
-            // cria o token do usuario
+        if (user != null) {
             JWTToken jwtToken = new JWTToken();
-
             jwtToken.setToken(JWTTokenUtil.generateToken(user));
-
             return ResponseEntity.ok(jwtToken);
         }
         return ResponseEntity.status(403).build();
     }
 
-
     @GetMapping("/usuario")
-    public ResponseEntity<ArrayList<Usuario>> recuperarTodos(){
+    public ResponseEntity<List<Usuario>> recuperarTodos(){ // 3. Retorno List (Interface)
         return ResponseEntity.ok(service.recuperarTodos());
     }
 
@@ -42,7 +37,7 @@ public class UsuarioController {
     public ResponseEntity<Usuario> adicionarNovo(@RequestBody Usuario usuario){
         Usuario res = service.adicionarNovo(usuario);
         if (res != null) {
-            return ResponseEntity.status(200).body(res);
+            return ResponseEntity.status(201).body(res); // 201 Created é o correto para inserção
         }
         return ResponseEntity.badRequest().build();
     }

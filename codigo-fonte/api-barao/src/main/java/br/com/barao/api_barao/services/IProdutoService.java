@@ -2,15 +2,23 @@ package br.com.barao.api_barao.services;
 
 import br.com.barao.api_barao.model.Categoria;
 import br.com.barao.api_barao.model.Produto;
+import org.springframework.data.domain.Page;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public interface IProdutoService {
     public Produto inserirNovoProduto(Produto produto);
     public Produto alterarProduto(Produto produto);
-    public ArrayList<Produto> listarTodos();
-    public ArrayList<Produto> listarDisponiveis();
-    public ArrayList<Produto> listarIndisponiveis();
-    public ArrayList<Produto> listarPorCategoria(Categoria categoria);
+
+    // Métodos que retornam Listas completas
+    public List<Produto> listarTodos();
+    public List<Produto> listarPorCategoria(Categoria categoria);
+    public List<Produto> listaIndisponiveis();
+
+    // Métodos que retornam Páginas (Paginação)
+    public Page<Produto> listarDisponiveis(int pagina);
+    public Page<Produto> listarDestaques(int pagina);
+    public Page<Produto> listarPorPalavraChave(String palavraChave, int pagina);
+
     public Produto recuperarPorId(int id);
 }

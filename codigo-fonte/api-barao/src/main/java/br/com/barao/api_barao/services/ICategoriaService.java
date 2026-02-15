@@ -3,6 +3,7 @@ package br.com.barao.api_barao.services;
 import br.com.barao.api_barao.model.Categoria;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public interface ICategoriaService {
     // este método recebe uma categoria só com o nome preenchido e vai inserir no banco
@@ -12,8 +13,14 @@ public interface ICategoriaService {
     public Categoria alterarCategoria(Categoria categoria);
 
     // este método vai recuperar todas as categorias sem filtro
-    public ArrayList<Categoria> recuperarTodasCategorias();
+    public List<Categoria> recuperarTodasCategorias();
 
     // este método vai recuperar todas as categorias por palavra chave
-    public ArrayList<Categoria> recuperarPorPalavraChave(String palavraChave);
+    public List<Categoria> recuperarPorPalavraChave(String palavraChave);
+
+    // recuperar 1 única categoria
+    public Categoria recuperarPorId(int id);
+
+    // recuperar tods ordenadas pelo Id
+    public List<Categoria> recuperarTodasOrdenadasPeloId();
 }

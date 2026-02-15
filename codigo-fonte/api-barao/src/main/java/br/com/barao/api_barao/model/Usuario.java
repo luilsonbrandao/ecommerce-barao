@@ -1,14 +1,20 @@
 package br.com.barao.api_barao.model;
 
 import jakarta.persistence.*;
+import lombok.*;
 
 @Entity
 @Table(name="tbl_usuario")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Usuario {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id_usuario")
-    private int id;
+    private Integer id; // Alterado de int para Integer
 
     @Column(name="username", length = 45, nullable = false, unique = true)
     private String username;
@@ -24,54 +30,4 @@ public class Usuario {
 
     @Column(name = "usuario_ativo")
     private int ativo;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getSenha() {
-        return senha;
-    }
-
-    public void setSenha(String senha) {
-        this.senha = senha;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public int getAtivo() {
-        return ativo;
-    }
-
-    public void setAtivo(int ativo) {
-        this.ativo = ativo;
-    }
-
-
 }

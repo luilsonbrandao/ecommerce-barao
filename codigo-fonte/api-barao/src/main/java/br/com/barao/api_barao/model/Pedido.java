@@ -2,26 +2,32 @@ package br.com.barao.api_barao.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.util.List;
 
 @Entity
 @Table(name = "tbl_pedido")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Pedido {
 
-    public static final int NOVO_PEDIDO = 1;
-    public static final int PAGO = 2;
+    // Constantes de Status
+    public static final int NOVO_PEDIDO   = 1;
+    public static final int PAGO          = 2;
     public static final int EM_TRANSPORTE = 3;
-    public static final int ENTREGUE = 4;
-    public static final int POS_VENDA = 5;
-    public static final int FINALIZADO = 6;
-    public static final int CANCELADO = 7;
+    public static final int ENTREGUE      = 4;
+    public static final int POS_VENDA     = 5;
+    public static final int FINALIZADO    = 6;
+    public static final int CANCELADO     = 7;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_pedido")
-    private int idPedido;
+    private Integer idPedido; // Alterado de int para Integer
 
     @Column(name = "data_pedido")
     private LocalDate dataPedido;
@@ -45,105 +51,22 @@ public class Pedido {
     @JoinColumn(name = "id_cliente")
     private Cliente cliente;
 
-
     @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
     @JsonIgnoreProperties("pedido")
     private List<ItemPedido> itensPedido;
 
-    public Pedido() {
-        super();
-    }
-
-    public Pedido(int id, LocalDate data, String nomeCliente, double valorTotal, double frete, int retirar, String observacao, int status) {
-        this.idPedido = id;
-        this.dataPedido = data;
-        Cliente cliente = new Cliente();
-        cliente.setNome(nomeCliente);
-        this.cliente = cliente;
-        this.valorTotal = valorTotal;
-        this.valorFrete = frete;
-        this.retirar = retirar;
-        this.observacoes = observacao;
-        this.status = status;
-    }
-    public int getIdPedido() {
-        return idPedido;
-    }
-
-    public void setIdPedido(int idPedido) {
+    // Construtor usado na Query do PedidoDAO
+    public Pedido(Integer idPedido, LocalDate dataPedido, String nomeCliente, double valorTotal, double valorFrete, int retirar, String observacoes, int status) {
         this.idPedido = idPedido;
-    }
-
-    public LocalDate getDataPedido() {
-        return dataPedido;
-    }
-
-    public void setDataPedido(LocalDate dataPedido) {
         this.dataPedido = dataPedido;
-    }
-
-    public double getValorTotal() {
-        return valorTotal;
-    }
-
-    public void setValorTotal(double valorTotal) {
         this.valorTotal = valorTotal;
-    }
-
-    public String getObservacoes() {
-        return observacoes;
-    }
-
-    public void setObservacoes(String observacoes) {
-        this.observacoes = observacoes;
-    }
-
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
-    }
-
-    public Cliente getCliente() {
-        return cliente;
-    }
-
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
-    }
-
-    public List<ItemPedido> getItensPedido() {
-        return itensPedido;
-    }
-
-    public void setItensPedido(List<ItemPedido> itensPedido) {
-        this.itensPedido = itensPedido;
-    }
-
-    @Override
-    public String toString() {
-        return "Pedido [idPedido=" + idPedido + ", dataPedido=" + dataPedido + ", valorTotal=" + valorTotal
-                + ", observacoes=" + observacoes + ", status=" + status + ", cliente=" + cliente + ", itensPedido="
-                + itensPedido + "]";
-    }
-
-    public double getValorFrete() {
-        return valorFrete;
-    }
-
-    public void setValorFrete(double valorFrete) {
         this.valorFrete = valorFrete;
-    }
-
-    public int getRetirar() {
-        return retirar;
-    }
-
-    public void setRetirar(int retirar) {
         this.retirar = retirar;
+        this.observacoes = observacoes;
+        this.status = status;
+
+        // Criação simplificada do cliente apenas para exibição
+        this.cliente = new Cliente();
+        this.cliente.setNome(nomeCliente);
     }
-
-
 }

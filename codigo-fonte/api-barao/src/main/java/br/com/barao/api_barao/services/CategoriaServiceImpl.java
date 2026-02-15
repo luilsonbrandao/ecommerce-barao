@@ -2,58 +2,62 @@ package br.com.barao.api_barao.services;
 
 import br.com.barao.api_barao.dao.CategoriaDAO;
 import br.com.barao.api_barao.model.Categoria;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import java.util.List;
 
-@Component
-public class CategoriaServiceImpl implements ICategoriaService{
+@Service
+@RequiredArgsConstructor
+public class CategoriaServiceImpl implements ICategoriaService {
 
-    @Autowired
-    private CategoriaDAO dao;
+    private final CategoriaDAO dao;
 
     @Override
     public Categoria inserirNovaCategoria(Categoria categoria) {
-        try{
-            if (categoria.getNome() != null && categoria.getNome().trim().length() > 0){
-                dao.save(categoria);
-                return categoria;
+        try {
+            if (categoria.getNome() != null && !categoria.getNome().trim().isEmpty()) {
+                return dao.save(categoria);
             }
-        }
-        catch (IllegalArgumentException ex){
-            System.out.println("DEBUG = "+ex.getMessage());
-        }
-        catch (Exception ex){
-            System.out.println("DEBUG = "+ex.getMessage());
+        } catch (Exception ex) {
+            System.err.println("Erro ao inserir categoria: " + ex.getMessage());
         }
         return null;
     }
 
     @Override
     public Categoria alterarCategoria(Categoria categoria) {
-        try{
-            if (categoria.getId() != null && categoria.getNome() != null && categoria.getNome().trim().length() > 0){
-                dao.save(categoria);
-                return categoria;
+        try {
+            if (categoria.getId() != null && categoria.getNome() != null && !categoria.getNome().trim().isEmpty()) {
+                return dao.save(categoria);
             }
-        }
-        catch (Exception ex){
-            System.out.println("DEBUD = "+ex.getMessage());
+        } catch (Exception ex) {
+            System.err.println("Erro ao alterar categoria: " + ex.getMessage());
         }
         return null;
     }
 
     @Override
-    public ArrayList<Categoria> recuperarTodasCategorias() {
-
-        return (ArrayList<Categoria>)dao.findAll();
+    public List<Categoria> recuperarTodasCategorias() {
+        return (List<Categoria>) dao.findAll();
     }
 
     @Override
-    public ArrayList<Categoria> recuperarPorPalavraChave(String palavraChave) {
-        if (palavraChave != null)
+    public List<Categoria> recuperarPorPalavraChave(String palavraChave) {
+        if (palavraChave != null) {
             return dao.findByNomeContaining(palavraChave);
-        return null;
+        }
+        return List.of();
+    }
+
+    @Override
+    public Categoria recuperarPorId(int id) {
+        return dao.findById(id).orElse(null);
+    }
+
+    @Override
+    public List<Categoria> recuperarTodasOrdenadasPeloId() {
+
+        return (List<Categoria>) dao.findAll();
     }
 }

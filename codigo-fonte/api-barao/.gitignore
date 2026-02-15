@@ -5,6 +5,13 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
+# ===============================
+# Arquivos locais de configuração
+# ===============================
+application-local.properties
+application-dev.properties
+.env
+
 ### STS ###
 .apt_generated
 .classpath
