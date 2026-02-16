@@ -2,6 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Produto } from '../models/produto.model';
+import { PaginaProduto } from '../models/pagina-produto.model';
 
 @Injectable({
   providedIn: 'root'
@@ -13,12 +14,19 @@ export class ProdutoService {
 
   constructor() { }
 
-  // Retorna um array de Produtos
-  public getAllProdutos(): Observable<Produto[]> {
-    return this.http.get<Produto[]>(this.apiUrl);
+
+  public getAllProdutos(page: number = 0): Observable<PaginaProduto> {
+
+    return this.http.get<PaginaProduto>(`${this.apiUrl}?page=${page}`);
   }
 
+  // Busca por ID (Mantém igual)
   buscarPorId(id: number): Observable<Produto> {
     return this.http.get<Produto>(`${this.apiUrl}/${id}`);
+  }
+
+  
+  buscarPorTermo(termo: string, page: number = 0): Observable<PaginaProduto> {
+      return this.http.get<PaginaProduto>(`${this.apiUrl}/busca?key=${termo}&page=${page}`);
   }
 }

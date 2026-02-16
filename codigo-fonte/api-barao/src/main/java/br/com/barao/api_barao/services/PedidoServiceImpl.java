@@ -2,11 +2,13 @@ package br.com.barao.api_barao.services;
 
 import br.com.barao.api_barao.dao.ClienteDAO;
 import br.com.barao.api_barao.dao.PedidoDAO;
+import br.com.barao.api_barao.dao.ProdutoDAO; // <--- IMPORT NOVO
 import br.com.barao.api_barao.dto.FiltroPedidoDTO;
 import br.com.barao.api_barao.dto.VendasPorDataDTO;
 import br.com.barao.api_barao.model.Cliente;
 import br.com.barao.api_barao.model.ItemPedido;
 import br.com.barao.api_barao.model.Pedido;
+import br.com.barao.api_barao.model.Produto; // <--- IMPORT NOVO
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -21,51 +23,72 @@ public class PedidoServiceImpl implements IPedidoService {
 
     private final PedidoDAO dao;
     private final ClienteDAO cliDao;
+    private final ProdutoDAO produtoDao;
     private final IBotService botService;
 
     @Override
     public Pedido inserirPedido(Pedido novo) {
         try {
-            // 1. Regra de Negócio trazida do Controller Legado:
-            // Atualiza ou salva o cliente antes de fechar o pedido para garantir consistência
+            // 1. Regra de Negócio: Atualiza ou salva o cliente
             if (novo.getCliente() != null) {
+                // Se o cliente vier sem ID (novo), salva. Se vier com ID, atualiza.
                 Cliente cliAtualizado = cliDao.save(novo.getCliente());
                 novo.setCliente(cliAtualizado);
             }
 
+            double totalCalculadoItens = 0.0;
+
             // 2. Regra de Itens e Preços
             for (ItemPedido item : novo.getItensPedido()) {
-                if (item.getProduto() != null) {
-                    item.setPrecoUnitario(item.getProduto().getPrecoPromo());
-                    item.setPrecoTotal(item.getPrecoUnitario() * item.getQtdeItem());
+                // O Front só manda o ID. Buscamos o produto completo no banco.
+                Produto produtoReal = produtoDao.findById(item.getProduto().getId()).orElse(null);
+
+                if (produtoReal != null) {
+                    // Atualiza o item com o objeto completo (para salvar corretamente no banco)
+                    item.setProduto(produtoReal);
+
+                    // Define o preço unitário usando a regra de negócio (Promoção ou Normal)
+                    // Usa o Wrapper Double para evitar NullPointerException, mas com fallback seguro
+                    Double precoFinal = (produtoReal.getPrecoPromo() != null && produtoReal.getPrecoPromo() > 0)
+                            ? produtoReal.getPrecoPromo()
+                            : produtoReal.getPreco();
+
+                    item.setPrecoUnitario(precoFinal);
+                    item.setPrecoTotal(precoFinal * item.getQtdeItem());
+
+                    totalCalculadoItens += item.getPrecoTotal();
                 }
+                // Vincula o item ao pedido pai
                 item.setPedido(novo);
             }
 
-            // 3. Definições Padrão
+            // 3. Atualiza valor total (Soma dos itens + Frete que veio da tela)
+            novo.setValorTotal(totalCalculadoItens + novo.getValorFrete());
+
+            // 4. Definições Padrão
             novo.setStatus(Pedido.NOVO_PEDIDO);
-            novo.setDataPedido(LocalDate.now()); // Garante data atual
+            novo.setDataPedido(LocalDate.now());
 
-            // 4. Salva o Pedido
-            dao.save(novo);
+            // 5. Salva o Pedido
+            Pedido pedidoSalvo = dao.save(novo);
 
-            // 5. Notificação Telegram
+            // 6. Notificação Telegram
             try {
                 if (botService != null) {
-                    botService.sendBotMessage(String.valueOf(novo.getIdPedido()));
+                    botService.sendBotMessage(String.valueOf(pedidoSalvo.getIdPedido()));
                 }
             } catch (Exception e) {
                 System.err.println("Aviso: Erro ao enviar mensagem no Telegram: " + e.getMessage());
             }
 
-            return novo;
+            return pedidoSalvo;
         } catch (Exception ex) {
             ex.printStackTrace();
-            return null;
+            return null; // Retornar null gera o 400 Bad Request no Controller
         }
     }
 
-    // --- O resto do arquivo permanece igual ao que você enviou ---
+    // --- MÉTODOS DE CONSULTA (Sem alterações) ---
 
     @Override
     public List<Pedido> buscarPorStatus(int status) {

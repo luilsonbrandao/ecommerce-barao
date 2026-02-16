@@ -25,19 +25,19 @@ public class Produto {
     private String linkFoto;
 
     @Column(name = "preco_produto", nullable = false)
-    private double preco;
+    private Double preco;
 
     @Column(name = "preco_promocional", nullable = false)
-    private double precoPromo;
+    private Double precoPromo;
 
     @Column(name = "disponivel")
-    private int disponivel;
+    private Integer disponivel;
 
     @Column(name = "destaque")
-    private int destaque;
+    private Integer destaque;
 
     @Column(name = "pronta_entrega")
-    private int prontaEntrega;
+    private Integer prontaEntrega;
 
     @ManyToOne
     @JoinColumn(name = "id_categoria")

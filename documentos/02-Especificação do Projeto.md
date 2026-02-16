@@ -18,12 +18,13 @@ A solução segue o padrão de **API RESTful** com arquitetura em camadas, garan
 
 | ID     | Descrição do Requisito                                                                 | Prioridade |
 | ------ | -------------------------------------------------------------------------------------- | ---------- |
-| RF-001 | **Manter Categorias:** O sistema deve permitir criar categorias (ex: "Interna", "Externa", "Produtos"). | ALTA       |
-| RF-002 | **Manter Serviços/Produtos:** O sistema deve permitir cadastrar itens com nome, descrição, preço e foto. | ALTA       |
-| RF-003 | **Vitrine de Serviços:** O cliente deve visualizar a lista de serviços disponíveis.    | ALTA       |
-| RF-004 | **Carrinho/Pedido:** O cliente deve conseguir adicionar serviços ao carrinho e fechar o pedido. | ALTA       |
-| RF-005 | **Autenticação:** O sistema deve diferenciar o acesso de Cliente e Administrador.      | MÉDIA      |
-| RF-006 | **Dashboard:** O administrador deve visualizar o total de vendas/serviços do período.  | BAIXA      |
+| RF-001 | **Catálogo de Produtos:** Listar produtos com paginação, filtro por categoria e busca. | ALTA       |
+| RF-002 | **Carrinho de Compras:** Adicionar/Remover itens e calcular totais dinamicamente.      | ALTA       |
+| RF-003 | **Cálculo de Frete:** Calcular taxa de entrega baseada na faixa de CEP do cliente.     | ALTA       |
+| RF-004 | **Checkout:** Coletar dados do cliente, endereço e finalizar o pedido.                 | ALTA       |
+| RF-005 | **Notificação Telegram:** Enviar alerta ao ADM via Bot quando um pedido for realizado. | MÉDIA      |
+| RF-006 | **Gestão Financeira:** Gerar registros de "Contas a Receber" ao finalizar pedido.      | BAIXA      |
+| RF-007 | **Integração WhatsApp:** Permitir agendamento direto via link do WhatsApp na vitrine.  | MÉDIA      |
 
 ### Requisitos Não Funcionais (RNF)
 
@@ -68,15 +69,18 @@ Responsável por agrupar os tipos de serviços.
 ### Tabela: `tbl_produto`
 Armazena tanto serviços (mão de obra) quanto produtos físicos.
 
-| Campo           | Tipo          | Detalhes                      |
-| --------------- | ------------- | ----------------------------- |
-| id_produto      | INT           | PK, Auto Increment            |
-| nome_produto    | VARCHAR(100)  | Not Null                      |
-| detalhe_produto | TEXT          | Descrição do serviço          |
-| preco_produto   | DECIMAL       | Valor unitário                |
-| link_foto       | VARCHAR(255)  | Caminho da imagem             |
-| disponivel      | INT           | 1 (Sim) / 0 (Não)             |
-| id_categoria    | INT           | FK (Ref. tbl_categoria)       |
+| Campo             | Tipo         | Detalhes                                      |
+| ----------------- | ------------ | --------------------------------------------- |
+| id_produto        | INT (PK)     | Identificador único                           |
+| nome_produto      | VARCHAR(100) | Nome do serviço ou produto                    |
+| detalhe_produto   | TEXT         | Descrição técnica                             |
+| link_foto         | VARCHAR(255) | URL/Caminho da imagem                         |
+| preco_produto     | DOUBLE       | Preço padrão (De)                             |
+| preco_promocional | DOUBLE       | Preço de venda (Por)                          |
+| disponivel        | INT          | 1=Visível, 0=Oculto                           |
+| destaque          | INT          | 1=Aparece na Home, 0=Apenas na busca          |
+| pronta_entrega    | INT          | 1=Exibe selo "Pronta Entrega"                 |
+| id_categoria      | INT (FK)     | Referência à `tbl_categoria`                  |
 
 ### Tabela: `tbl_cliente`
 Armazena os dados dos clientes do Lava-Jato.
@@ -97,16 +101,16 @@ Armazena os dados dos clientes do Lava-Jato.
 ### Tabela: `tbl_pedido`
 Registra os cabeçalhos dos pedidos realizados.
 
-| Campo        | Tipo    | Detalhes                                        |
-| ------------ | ------- | ----------------------------------------------- |
-| id_pedido    | INT     | PK, Auto Increment                              |
-| data_pedido  | DATE    | Data da solicitação                             |
-| valor_total  | DOUBLE  | Valor calculado (Soma dos itens - Descontos)    |
-| valor_frete  | DOUBLE  | Custo de entrega                                |
-| retirar      | INT     | 1 (Retirar no local) / 0 (Delivery)             |
-| status       | INT     | 1=Novo, 2=Pago, 3=Transporte, 4=Entregue...     |
-| observacoes  | TEXT    | Notas do cliente                                |
-| id_cliente   | INT     | FK (Ref. tbl_cliente)                           |
+| Campo             | Tipo         | Detalhes                                      |
+| ----------------- | ------------ | --------------------------------------------- |
+| id_pedido         | INT (PK)     | Identificador único                           |
+| data_pedido       | DATE         | Data da realização                            |
+| valor_total       | DOUBLE       | Soma dos itens + Frete                        |
+| valor_frete       | DOUBLE       | Valor do frete aplicado                       |
+| retirar           | INT          | 1=Retirada, 0=Delivery                        |
+| status            | INT          | 1=Novo, 2=Pago, 3=Transporte, 4=Entregue...   |
+| observacoes       | TEXT         | Notas do cliente                              |
+| id_cliente        | INT (FK)     | Referência à `tbl_cliente`                    |
 
 ### Tabela: `tbl_itempedido`
 Tabela associativa que armazena os produtos de cada pedido.
@@ -119,6 +123,34 @@ Tabela associativa que armazena os produtos de cada pedido.
 | preco_total    | DOUBLE | (Qtde * Unitario) com possível desconto |
 | id_pedido      | INT    | FK (Ref. tbl_pedido)                    |
 | id_produto     | INT    | FK (Ref. tbl_produto)                   |
+
+### Tabela: `tbl_financeiro`
+Responsável pelo fluxo de caixa e parcelamento.
+| Campo             | Tipo         | Detalhes                                      |
+| ----------------- | ------------ | --------------------------------------------- |
+| num_seq           | INT (PK)     | Identificador                                 |
+| num_parcela       | INT          | Número da parcela (ex: 1 de 3)                |
+| total_parcelas    | INT          | Total de parcelas                             |
+| vencimento        | DATE         | Data de vencimento prevista                   |
+| valor_bruto       | DOUBLE       | Valor original                                |
+| valor_liquido     | DOUBLE       | Valor após taxas                              |
+| id_pedido         | INT (FK)     | Origem da receita                             |
+| forma_pgto        | INT (FK)     | Referência à `tbl_formapgto`                  |
+
+### Tabela: `tbl_frete`
+| Campo             | Tipo         | Detalhes                                      |
+| ----------------- | ------------ | --------------------------------------------- |
+| id                | INT (PK)     | Identificador                                 |
+| prefixo           | VARCHAR(10)  | Faixa de CEP (ex: "66000")                    |
+| valor             | DOUBLE       | Custo da entrega para esta faixa              |
+| descricao         | VARCHAR(100) | Nome da região (ex: "Centro", "Icoaraci")     |
+
+### Tabela: `tbl_formapgto`
+| Campo             | Tipo         | Detalhes                                      |
+| ----------------- | ------------ | --------------------------------------------- |
+| num_seq           | INT (PK)     | Identificador                                 |
+| descricao         | VARCHAR(40)  | Ex: "Cartão Crédito", "Pix"                   |
+| retencao          | DOUBLE       | Taxa da operadora (%) para cálculo líquido    |
 
 ### Diagrama Entidade-Relacionamento (DER)
 

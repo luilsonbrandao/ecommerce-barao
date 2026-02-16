@@ -26,10 +26,35 @@ Ao selecionar um serviço, o cliente é direcionado para uma rota específica (e
 ![Tela de Detalhes](img/detalhe-screen.png)
 *(Captura de tela da versão Desktop - 11/02/2026)*
 
-## Identidade Visual
+## Identidade Visual e Layout
+O projeto utiliza uma paleta de cores escura/industrial, alinhada ao segmento automotivo, com destaque em **Amarelo (#FFC107)** para ações de conversão (Botões, Preços, Badges).
 
-* **Tipografia:** Fonte padrão do Bootstrap (System UI) para legibilidade rápida.
-* **Cores:**
-    * *Primary (Azul/Roxo):* Botões de ação principal.
-    * *Dark (Preto/Cinza):* NavBar e Rodapé, remetendo à estética automotiva/industrial.
-    * *Success (Verde):* Botão de WhatsApp.
+### 1. Home (Vitrine de Destaques)
+A página inicial utiliza um carrossel rotativo para promoções, seguido por uma grade responsiva de produtos.
+* **Badge "Pronta Entrega":** Destaque visual em amarelo para itens em estoque.
+* **Cards:** Apresentam Foto, Categoria, Nome, Preço (formatado BRL) e botão "Ver Detalhes".
+* **Paginação:** Sistema de navegação (Anterior/Próximo) integrado ao Back-end.
+
+![Home Page](img/home_screen.jpg)
+*(Representação da Vitrine Virtual com listagem de serviços)*
+
+### 2. Detalhes do Produto
+Foco na conversão. Apresenta a imagem ampliada e duas opções claras de ação:
+1.  **Agendar via WhatsApp:** Abre diretamente a API do WhatsApp com mensagem pré-configurada.
+2.  **Adicionar ao Carrinho:** Inicia o fluxo de compra pelo site.
+
+![Detalhes do Produto](img/detalhe_screen.jpg)
+
+### 3. Carrinho de Compras
+Lista os itens selecionados, permitindo alterar quantidades ou remover itens.
+* **Resumo:** Exibe o subtotal dinâmico.
+* **Persistência:** Os dados são salvos no `LocalStorage`, não perdendo o carrinho se o cliente atualizar a página.
+
+### 4. Checkout (Efetivar Pedido)
+Formulário inteligente para finalização.
+* **Busca de Cliente:** Verifica se o telefone já existe na base para auto-preencher os dados.
+* **Integração ViaCEP:** Ao digitar o CEP, preenche automaticamente Logradouro, Bairro e Cidade.
+* **Cálculo de Frete:** O sistema verifica o CEP digitado e busca na `tbl_frete` o valor correspondente, somando ao total.
+* **Opção "Retirar":** Permite zerar o frete caso o cliente opte por buscar o veículo/produto.
+
+![Diagrama de Interface](img/fluxo_interface.png)

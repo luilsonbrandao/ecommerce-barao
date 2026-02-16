@@ -15,7 +15,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ProdutoServiceImpl implements IProdutoService {
 
-    private static final int PAGE_SIZE = 10; // Ajuste o tamanho da página conforme necessário
+    private static final int PAGE_SIZE = 8; // Ajuste o tamanho da página conforme necessário
     private final ProdutoDAO dao;
 
     @Override

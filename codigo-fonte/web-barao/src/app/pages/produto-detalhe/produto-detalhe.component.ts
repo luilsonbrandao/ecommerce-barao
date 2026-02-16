@@ -88,4 +88,15 @@ export class ProdutoDetalheComponent implements OnInit {
     // 5. Vai para o carrinho
     this.router.navigate(['/carrinho']);
   }
+
+  public comprarWhatsapp() {
+  if(!this.produto) return;
+
+  // Seu número configurado
+  const numero = "5591900000000";
+  const msg = `Olá! Tenho interesse no serviço/produto *${this.produto.nome}* (R$ ${this.produto.preco}).`;
+
+  const url = `https://wa.me/${numero}?text=${encodeURIComponent(msg)}`;
+  window.open(url, '_blank');
+}
 }

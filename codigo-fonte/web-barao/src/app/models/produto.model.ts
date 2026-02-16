@@ -6,7 +6,7 @@ export interface Produto {
   detalhe?: string;
   linkFoto: string;
   preco: number;
-  precoPromo?: number; 
+  precoPromo?: number;
   disponivel?: number;
-  categoria: Categoria;
+  categoria?: Categoria;
 }

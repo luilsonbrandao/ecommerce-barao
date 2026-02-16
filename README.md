@@ -1,36 +1,39 @@
-# 🚿 Barão Lava a Jato | Ecommerce & Gestão
+# 🚿 Barão Estética Automotiva | Ecommerce & Gestão
 
 > **Status do Projeto:** 🚧 Em Desenvolvimento (Integração Front/Back)
 
-Sistema de Ecommerce e Gestão desenvolvido sob medida para o **Lava a Jato Barão**. O objetivo é digitalizar a oferta de serviços (lavagens, polimentos, higienização) e venda de produtos automotivos, permitindo que o proprietário gerencie pedidos e clientes em uma plataforma única.
+Sistema de Ecommerce e Gestão desenvolvido sob medida para o **Barão Estética Automotiva**. O objetivo é digitalizar a oferta de serviços (lavagens, polimentos, higienização) e venda de produtos automotivos, permitindo que o proprietário gerencie pedidos e clientes em uma plataforma única.
 
 ## 💼 O Cliente
 
-**Tonyelson Santos da Silva**, proprietário do Lava a Jato Barão.
+**Tonyelson Santos da Silva**, proprietário da Barão Estética Automotiva .
 O sistema visa profissionalizar o atendimento, saindo do controle manual para uma gestão digitalizada de serviços e fluxo financeiro.
 
 ## 🚀 Tecnologias (Stack)
 
-* **Back-end:** Java 17 (LTS), Spring Boot 3.5.10
-* **Banco de Dados:** MySQL 8
-* **Segurança:** Spring Security + JWT (Em breve)
-* **Front-end Loja:** Angular 19 (Standalone Components) - *Em Desenvolvimento*
-* **Front-end Admin:** Angular (Planejado)
-* **Infra:** Docker (Planejado)
+* **Back-end:** Java 17 (LTS), Spring Boot 3.1.5
+* **Banco de Dados:** MySQL 8 (Hibernate/JPA)
+* **Segurança:** Spring Security 6 + JWT (Stateless)
+* **Integrações:** Telegram Bot API (Notificações em tempo real)
+* **Front-end:** Angular 19 (Standalone Components, Signals)
+* **Estilização:** Bootstrap 5 + Bootstrap Icons
 
-## 🛠️ Funcionalidades Principais (Roadmap)
+## 🛠️ Funcionalidades Implementadas
 
-- [x] **API RESTful** estruturada em camadas (MVC).
-- [x] **Gestão de Categorias** (Ex: Lavagens, Estética, Acessórios).
-- [x] **Catálogo de Serviços e Produtos** (Back-end implementado).
-- [x] **Gestão de Clientes** (Cadastro e consulta).
-- [x] **Processamento de Pedidos** (Cálculo de valores, regra de desconto em atacado e persistência).
-- [x] **Upload de Fotos** (Infraestrutura desenhada, falta implementar no Java).
-- [x] **Vitrine Virtual** (Front-end: Home e Detalhes implementados).
-- [ ] **Carrinho de Compras** (Front-end).
-- [ ] **Dashboard Administrativo** para o Tonyelson.
+- [x] **API RESTful** robusta com tratamento de erros e DTOs.
+- [x] **Segurança:** Autenticação JWT e proteção de rotas.
+- [x] **Catálogo Híbrido:** Suporte para Serviços (Agendamento) e Produtos Físicos (Estoque).
+- [x] **Carrinho de Compras:** Gestão de itens, quantidades e subtotal no LocalStorage.
+- [x] **Checkout Inteligente:**
+    - Busca de endereço via CEP (Integração ViaCEP).
+    - Cálculo automático de Frete baseado em prefixos de CEP.
+    - Opção de "Retirada no Local".
+- [x] **Gestão de Pedidos:** Fluxo completo (Novo -> Pago -> Entregue).
+- [x] **Notificações:** Envio automático de mensagens para o Telegram do administrador ao receber novo pedido.
+- [x] **Módulo Financeiro:** Geração automática de contas a receber e fluxo de caixa parcelado.
+- [x] **Upload de Imagens:** Armazenamento local com referência no banco.
 
-# Documentação
+# 📂 Estrutura da Documentação
 
 <ol>
 <li><a href="documentos/01-Documentação de Contexto.md"> Documentação de Contexto</a></li>

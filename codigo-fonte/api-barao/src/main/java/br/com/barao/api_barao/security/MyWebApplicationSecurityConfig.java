@@ -32,49 +32,40 @@ public class MyWebApplicationSecurityConfig {
                 // --- CONFIGURAÇÃO DE CORS CENTRALIZADA ---
                 .cors(cors -> cors.configurationSource(request -> {
                     CorsConfiguration configuration = new CorsConfiguration();
-                    configuration.setAllowedOrigins(List.of("*")); // Libera tudo (Ideal para Dev). Em Prod, coloque a URL do Angular.
+                    configuration.setAllowedOrigins(List.of("*")); // Em produção, restrinja isso!
                     configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
                     configuration.setAllowedHeaders(List.of("*"));
                     return configuration;
                 }))
 
                 .authorizeHttpRequests(auth -> auth
-                        // --- Requisições Liberadas (Suas rotas originais) ---
+                        // --- 1. Rota de Erro do Spring (FUNDAMENTAL PARA DEBUG) ---
+                        .requestMatchers("/error").permitAll()
 
-                        // Categorias
-                        .requestMatchers(HttpMethod.GET, "/categoria").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/categoria/search").permitAll()
+                        // --- 2. Recursos Estáticos e Documentação (Swagger) ---
+                        .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html").permitAll()
 
-                        // Clientes
+                        // --- 3. Regras de Negócio Públicas (GET) ---
+                        // O uso de '/**' cobre subcaminhos como /search, /categoria/{id}, etc.
+                        .requestMatchers(HttpMethod.GET, "/categoria", "/categoria/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/produto", "/produto/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/fretes", "/fretes/**", "/fretesdisponiveis").permitAll()
+
+                        // Clientes: Buscas são públicas (Login não precisa, pois é POST abaixo)
                         .requestMatchers(HttpMethod.GET, "/cliente/**").permitAll()
 
-                        // Produtos
-                        .requestMatchers(HttpMethod.GET, "/produto").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/produto/categoria/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/produto/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/produto/busca").permitAll()
-
-                        // Pedidos
+                        // Pedidos: Busca pública (se for regra de negócio)
                         .requestMatchers(HttpMethod.GET, "/pedido/search/**").permitAll()
 
-                        // Login e Criação de Pedido (POST)
+                        // --- 4. Ações Públicas (POST) ---
                         .requestMatchers(HttpMethod.POST, "/login").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/pedido").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/pedido").permitAll() // Criar pedido é público
 
-                        // Fretes
-                        .requestMatchers(HttpMethod.GET, "/fretesdisponiveis").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/fretes/prefixo/**").permitAll()
-
-                        // Swagger e Documentação API
-                        .requestMatchers(HttpMethod.GET, "/swagger-ui/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/swagger-ui.html").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/v3/api-docs/**").permitAll()
-
-                        // --- Qualquer outra requisição precisa de autenticação ---
+                        // --- 5. Todo o resto exige autenticação (Token JWT) ---
                         .anyRequest().authenticated()
                 )
 
-                // Adiciona o seu filtro de Token antes do filtro padrão
+                // Filtro de Token JWT antes do filtro padrão
                 .addFilterBefore(new TokenFilter(), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
