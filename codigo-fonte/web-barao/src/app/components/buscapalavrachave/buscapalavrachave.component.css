@@ -1,0 +1,97 @@
+/* Container principal com espaçamento */
+#destaque {
+  margin-top: 3em;
+  margin-bottom: 3em;
+}
+
+/* Título e Decoração */
+.text-primary {
+  color: #212529 !important; /* Preto forte ao invés de azul */
+}
+
+.div-decorativa {
+  width: 80px;
+  height: 4px;
+  background-color: #FFC107; /* Amarelo Barão */
+  margin-top: 10px;
+  border-radius: 2px;
+}
+
+/* --- ESTILO DOS CARDS --- */
+.card {
+  transition: all 0.3s ease;
+  border: none;
+  background-color: #fff;
+}
+
+/* Efeito de flutuar ao passar o mouse */
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 1rem 3rem rgba(0,0,0,.15)!important;
+}
+
+/* Área da imagem (Garante altura fixa e zoom) */
+.img-container {
+  height: 250px;
+  overflow: hidden;
+  position: relative;
+  /* Arredonda só as pontas de cima */
+  border-top-left-radius: var(--bs-border-radius);
+  border-top-right-radius: var(--bs-border-radius);
+}
+
+.img-container img {
+  transition: transform 0.5s ease;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Evita distorção */
+}
+
+/* Efeito de Zoom na foto */
+.card:hover .img-container img {
+  transform: scale(1.1);
+}
+
+/* Badge (Pronta Entrega) */
+#prontaEntrega {
+  z-index: 10;
+  letter-spacing: 0.5px;
+  font-weight: 600;
+}
+
+/* --- BOTÕES --- */
+.btn-primary {
+  background-color: #FFC107;
+  border-color: #FFC107;
+  color: #000;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  padding: 0.5rem 1rem;
+  letter-spacing: 0.5px;
+}
+
+.btn-primary:hover, .btn-primary:active, .btn-primary:focus {
+  background-color: #e0a800 !important;
+  border-color: #d39e00 !important;
+  color: #000 !important;
+}
+
+/* Botões Secundários (Paginação) */
+.btn-outline-primary {
+  color: #212529;
+  border-color: #212529;
+}
+
+.btn-outline-primary:hover {
+  background-color: #212529;
+  color: #FFC107;
+}
+
+/* Botão da página ativa */
+.btn-primary.disabled, .btn-primary:disabled {
+    background-color: #212529;
+    border-color: #212529;
+    color: #FFC107;
+    opacity: 1;
+}

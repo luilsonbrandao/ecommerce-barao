@@ -11,4 +11,8 @@ export class PedidoService {
   public inserirNovoPedido(novoPedido: Pedido): Observable<Pedido> {
     return this.http.post<Pedido>(this.apiUrl, novoPedido);
   }
+
+  public buscarPorId(id: number): Observable<Pedido> {
+    return this.http.get<Pedido>(`${this.apiUrl}/search/${id}`);
+  }
 }

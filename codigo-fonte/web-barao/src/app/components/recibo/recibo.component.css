@@ -1,0 +1,36 @@
+/* Cor primária do Barão */
+.text-primary {
+    color: #212529 !important; /* Texto escuro para contraste */
+}
+
+/* Botão de imprimir */
+.btn-primary {
+    background-color: #FFC107;
+    border-color: #FFC107;
+    color: #000;
+    font-weight: 700;
+}
+
+.btn-primary:hover {
+    background-color: #e0a800;
+    border-color: #d39e00;
+}
+
+/* Ajustes para Impressão */
+@media print {
+    /* Esconde Navbar e Rodapé se eles tiverem a classe .d-print-none ou se estiverem fora do router-outlet */
+    header, footer, .d-print-none {
+        display: none !important;
+    }
+
+    /* Remove sombras e bordas para economizar tinta */
+    .card {
+        border: none !important;
+        box-shadow: none !important;
+    }
+
+    /* Garante fundo branco */
+    body {
+        background-color: #fff;
+    }
+}

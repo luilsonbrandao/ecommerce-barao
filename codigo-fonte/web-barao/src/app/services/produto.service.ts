@@ -25,8 +25,13 @@ export class ProdutoService {
     return this.http.get<Produto>(`${this.apiUrl}/${id}`);
   }
 
-  
+
   buscarPorTermo(termo: string, page: number = 0): Observable<PaginaProduto> {
       return this.http.get<PaginaProduto>(`${this.apiUrl}/busca?key=${termo}&page=${page}`);
   }
+
+  public buscarPorCategoria(idCategoria: number, page: number = 0): Observable<PaginaProduto> {
+    return this.http.get<PaginaProduto>(`${this.apiUrl}/categoria/${idCategoria}?page=${page}`);
+  }
+
 }

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
 import { Pedido } from '../models/pedido.model';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +11,7 @@ export class CarrinhoService {
   private numberOfItens = new BehaviorSubject<number>(0);
 
   constructor() {
-    // A MÁGICA: Assim que o serviço nasce, ele verifica se já tem coisas salvas
+    // Assim que o serviço nasce, ele verifica se já tem coisas salvas
     this.atualizarContagem();
   }
 
@@ -20,7 +20,7 @@ export class CarrinhoService {
     return this.numberOfItens;
   }
 
-  // Método novo que vamos chamar sempre que mexer no carrinho
+  // Método que vamos chamar sempre que mexer no carrinho
   public atualizarContagem() {
     const json = localStorage.getItem("carrinhoBarao");
 

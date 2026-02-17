@@ -172,7 +172,7 @@ export class EfetivarpedidoComponent implements OnInit {
     }
   }
 
-  // --- O MÉTODO CORRIGIDO ---
+
   public finalizarPedido() {
     if (!this.cliente.nome || this.cliente.nome.trim().split(' ').length < 2) {
       this.mostrarErro("Por favor Informe nome e sobrenome");
@@ -181,7 +181,7 @@ export class EfetivarpedidoComponent implements OnInit {
 
     this.emProcessamento = true;
 
-    // 1. Limpeza de dados (CORREÇÃO DE SEGURANÇA)
+
     if (!this.cliente.dataNasc) {
         this.cliente.dataNasc = undefined;
     }
@@ -200,10 +200,12 @@ export class EfetivarpedidoComponent implements OnInit {
     // 3. Envia
     this.pedService.inserirNovoPedido(this.pedido).subscribe({
       next: (res: Pedido) => {
+        // Limpa o carrinho
         localStorage.removeItem("carrinhoBarao");
         this.carService.atualizarContagem();
-        alert("Pedido realizado com sucesso! ID: " + res.idPedido);
-        this.router.navigate(["/"]);
+
+        //alert("Pedido realizado com sucesso! ID: " + res.idPedido);
+        this.router.navigate(["/recibo", res.idPedido]);
       },
       error: (err) => {
         this.emProcessamento = false;

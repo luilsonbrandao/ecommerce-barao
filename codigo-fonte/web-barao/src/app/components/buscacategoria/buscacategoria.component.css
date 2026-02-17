@@ -1,0 +1,101 @@
+
+#destaque {
+  margin-top: 3em;
+  margin-bottom: 3em;
+}
+
+/* Card mais limpo e sem bordas cinzas */
+.card {
+  transition: all 0.3s ease;
+  border: none;
+  background-color: #fff;
+}
+
+/* Efeito de flutuar ao passar o mouse */
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 1rem 3rem rgba(0,0,0,.15)!important;
+}
+
+/* Área da imagem (Garante que todas tenham o mesmo tamanho) */
+.img-container {
+  height: 250px;
+  overflow: hidden;
+  position: relative;
+  /* Arredonda só as pontas de cima */
+  border-top-left-radius: var(--bs-border-radius);
+  border-top-right-radius: var(--bs-border-radius);
+}
+
+/* Efeito de Zoom na foto */
+.card:hover .img-container img {
+  transform: scale(1.1);
+}
+
+.img-container img {
+  transition: transform 0.5s ease;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Evita imagem esticada */
+}
+
+/* Badge flutuante (Pronta Entrega) */
+#prontaEntrega {
+  z-index: 10;
+  letter-spacing: 0.5px;
+  font-weight: 600;
+}
+
+
+/* Linha decorativa Amarela */
+.div-decorativa {
+  width: 80px;
+  height: 4px;
+  background-color: #FFC107; /* Amarelo Barão */
+  margin-top: 10px;
+  border-radius: 2px;
+}
+
+/* BOTÃO PRINCIPAL (Substitui o Azul pelo Amarelo) */
+.btn-primary {
+  background-color: #FFC107;
+  border-color: #FFC107;
+  color: #000; /* Texto preto para leitura fácil */
+  font-weight: 700; /* Negrito */
+  text-transform: uppercase;
+
+  /* AJUSTE FINO DE TAMANHO */
+  font-size: 0.85rem; /* Diminui a letra */
+  padding: 0.5rem 1rem; /* Diminui o botão em si (menos gordinho) */
+  letter-spacing: 0.5px; /* Espaça um pouco as letras para ficar chique */
+}
+
+.btn-primary:hover, .btn-primary:active, .btn-primary:focus {
+  background-color: #e0a800 !important; /* Amarelo mais escuro no hover */
+  border-color: #d39e00 !important;
+  color: #000 !important;
+}
+
+/* PREÇO (Substitui o azul padrão por Preto Forte) */
+.text-primary {
+  color: #212529 !important;
+}
+
+/* BOTÕES SECUNDÁRIOS E PAGINAÇÃO */
+.btn-outline-primary {
+  color: #212529;
+  border-color: #212529;
+}
+
+.btn-outline-primary:hover {
+  background-color: #212529;
+  color: #FFC107; /* Fundo preto com texto amarelo */
+}
+
+/* Botão da página ativa (número da página) */
+.btn-primary.disabled, .btn-primary:disabled {
+    background-color: #212529;
+    border-color: #212529;
+    color: #FFC107; /* Número amarelo no fundo preto */
+    opacity: 1;
+}

@@ -15,7 +15,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ProdutoServiceImpl implements IProdutoService {
 
-    private static final int PAGE_SIZE = 8; // Ajuste o tamanho da página conforme necessário
+    private static final int PAGE_SIZE = 8;
     private final ProdutoDAO dao;
 
     @Override
@@ -40,7 +40,8 @@ public class ProdutoServiceImpl implements IProdutoService {
 
     @Override
     public List<Produto> listarTodos() {
-        return (List<Produto>) dao.findAll();
+        // Com JpaRepository, o findAll já retorna List, não precisa de cast
+        return dao.findAll();
     }
 
     @Override
@@ -50,14 +51,14 @@ public class ProdutoServiceImpl implements IProdutoService {
     }
 
     @Override
-    public List<Produto> listarPorCategoria(Categoria categoria) {
-        return dao.findAllByDisponivelAndCategoria(1, categoria);
+    public Page<Produto> listarPorCategoria(Categoria categoria, int pagina) {
+        Pageable pageable = PageRequest.of(pagina, PAGE_SIZE);
+        // Agora o DAO aceita esses parâmetros!
+        return dao.findAllByDisponivelAndCategoria(1, categoria, pageable);
     }
 
     @Override
     public List<Produto> listaIndisponiveis() {
-        // Para pegar os indisponíveis sem paginar, usamos Pageable.unpaged() ou criamos um método List no DAO
-        // Assumindo que você quer uma lista simples aqui, vamos usar o método do DAO mas pegar o content
         Pageable unpaged = Pageable.unpaged();
         return dao.findAllByDisponivel(0, unpaged).getContent();
     }

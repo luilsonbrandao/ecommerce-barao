@@ -74,6 +74,7 @@
         class="d-flex mt-3 mt-lg-0"
         role="search"
         style="width: 100%; max-width: 400px"
+        (submit)="buscar()"
       >
         <div class="input-group">
           <input
@@ -81,8 +82,15 @@
             type="search"
             placeholder="Encontre seu produto..."
             aria-label="Buscar"
+            name="keyword"
+            [(ngModel)]="keyword"
           />
-          <button class="btn btn-secondary" type="submit" title="Buscar">
+          <button
+            class="btn btn-secondary"
+            type="button"
+            (click)="buscar()"
+            title="Buscar"
+          >
             <i class="bi bi-search"></i>
           </button>
         </div>

@@ -12,8 +12,7 @@ public interface IProdutoService {
 
     // Métodos que retornam Listas completas
     public List<Produto> listarTodos();
-    public List<Produto> listarPorCategoria(Categoria categoria);
-    public List<Produto> listaIndisponiveis();
+    public Page<Produto> listarPorCategoria(Categoria categoria, int pagina);    public List<Produto> listaIndisponiveis();
 
     // Métodos que retornam Páginas (Paginação)
     public Page<Produto> listarDisponiveis(int pagina);
