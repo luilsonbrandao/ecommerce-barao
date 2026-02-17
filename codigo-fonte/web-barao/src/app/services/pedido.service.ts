@@ -12,7 +12,8 @@ export class PedidoService {
     return this.http.post<Pedido>(this.apiUrl, novoPedido);
   }
 
-  public buscarPorId(id: number): Observable<Pedido> {
-    return this.http.get<Pedido>(`${this.apiUrl}/search/${id}`);
+  // Mudança de parametro de (id: number) para (uuid: string)
+  public buscarPorUuid(uuid: string): Observable<Pedido> {
+    return this.http.get<Pedido>(`${this.apiUrl}/search/${uuid}`);
   }
 }

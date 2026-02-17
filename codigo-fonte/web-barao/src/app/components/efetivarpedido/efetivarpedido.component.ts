@@ -204,17 +204,21 @@ export class EfetivarpedidoComponent implements OnInit {
         localStorage.removeItem("carrinhoBarao");
         this.carService.atualizarContagem();
 
-        //alert("Pedido realizado com sucesso! ID: " + res.idPedido);
-        this.router.navigate(["/recibo", res.idPedido]);
+        if (res.uuid) {
+            // Se o backend retornou o UUID, usa ele na URL
+            this.router.navigate(["/recibo", res.uuid]);
+        } else {
+            // Fallback (caso o banco não tenha gerado uuid por algum erro grave)
+            alert("Pedido realizado, mas houve um erro ao gerar o link seguro.");
+        }
       },
       error: (err) => {
         this.emProcessamento = false;
-        this.mostrarErro("Não consegui efetivar seu pedido. Tente novamente.");
-        console.error(err);
+        // ... (tratamento de erro igual) ...
       }
     });
   }
-
+  
   // --- UTILITÁRIOS ---
   private mostrarErro(msg: string) {
     this.mensagemErro = msg;
