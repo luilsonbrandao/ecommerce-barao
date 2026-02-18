@@ -1,0 +1,51 @@
+<app-navbar></app-navbar>
+
+<div class="container mt-4">
+  <div class="row mb-4 border-bottom pb-2 align-items-center">
+    <div class="col-md-8">
+      <h3 class="fw-bold m-0"><i class="fas fa-list-ul me-2 text-warning"></i> Gerenciar Categorias</h3>
+    </div>
+    <div class="col-md-4 text-md-end mt-3 mt-md-0">
+      <a class="btn btn-warning fw-bold text-dark shadow-sm" routerLink='/editorcategoria/new'>
+        <i class="fas fa-plus me-1"></i> Nova Categoria
+      </a>
+    </div>
+  </div>
+
+  <div class="card shadow-sm border-0">
+    <div class="card-body p-0">
+      <table class="table table-hover table-striped m-0">
+        <thead class="table-dark">
+          <tr>
+            <th scope="col" class="ps-4" style="width: 100px;">ID</th>
+            <th scope="col">Nome da Categoria</th>
+            <th scope="col" class="text-end pe-4" style="width: 150px;">Ação</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (ITEM of lista; track ITEM.id) {
+            <tr>
+              <th scope="row" class="ps-4 align-middle">{{ ITEM.id }}</th>
+              <td class="align-middle fw-semibold text-primary">
+                <a [routerLink]="['/editorcategoria', ITEM.id]" class="text-decoration-none text-dark">
+                  {{ ITEM.nome }}
+                </a>
+              </td>
+              <td class="text-end pe-4">
+                <a [routerLink]="['/editorcategoria', ITEM.id]" class="btn btn-sm btn-outline-secondary">
+                  <i class="fas fa-edit"></i> Editar
+                </a>
+              </td>
+            </tr>
+          } @empty {
+            <tr>
+              <td colspan="3" class="text-center py-4 text-muted">
+                Nenhuma categoria cadastrada.
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

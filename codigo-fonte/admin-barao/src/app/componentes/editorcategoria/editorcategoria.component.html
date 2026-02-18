@@ -1,0 +1,42 @@
+<app-navbar></app-navbar>
+
+<div class="container mt-4">
+  <div class="row mb-4 border-bottom pb-2">
+    <div class="col-12">
+      <h3 class="fw-bold m-0 text-primary">
+        <i class="fas fa-edit me-2"></i> Editor de Categorias
+      </h3>
+      <p class="text-muted mt-1 mb-0">
+        @if (mode === 0) {
+          Inserindo nova categoria no sistema.
+        } @else {
+          Editando categoria existente (ID: {{ categoria.id }}).
+        }
+      </p>
+    </div>
+  </div>
+
+  <div class="card shadow-sm border-0" style="max-width: 600px;">
+    <div class="card-body p-4">
+      <div class="mb-4">
+        <label for="txtNome" class="form-label fw-bold">Nome da Categoria</label>
+        <input type="text" class="form-control form-control-lg" id="txtNome"
+               placeholder="Ex: Lavagens, PPF..."
+               [(ngModel)]="categoria.nome">
+      </div>
+
+      <div class="d-flex gap-2">
+        <button class="btn btn-warning fw-bold text-dark px-4"
+                (click)="salvarCategoria()"
+                [disabled]="!categoria.nome || emProcessamento">
+          @if (emProcessamento) {
+            Salvando...
+          } @else {
+            <i class="fas fa-save me-1"></i> Salvar Dados
+          }
+        </button>
+        <a class="btn btn-outline-secondary px-4" routerLink='/categorias'>Cancelar</a>
+      </div>
+    </div>
+  </div>
+</div>

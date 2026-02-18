@@ -1,6 +1,8 @@
 import { Routes } from '@angular/router';
 import { LoginComponent } from './componentes/login/login.component';
 import { DashboardComponent } from './componentes/dashboard/dashboard.component';
+import { CategoriasComponent } from './componentes/categorias/categorias.component';
+import { EditorcategoriaComponent } from './componentes/editorcategoria/editorcategoria.component';
 
 export const routes: Routes = [
   // Redireciona a rota vazia para a tela de login
@@ -13,8 +15,8 @@ export const routes: Routes = [
   { path: 'dashboard', component: DashboardComponent },
 
   // --- Mapeamento das rotas futuras (Fases 3, 4 e 5) ---
-  // Descomentaremos essas linhas conforme formos criando os componentes
-  // { path: 'categorias', component: CategoriasComponent },
+  { path: 'categorias', component: CategoriasComponent },
+  { path: 'editorcategoria/:id', component: EditorcategoriaComponent },
   // { path: 'produtos', component: ProdutosComponent },
   // { path: 'pedidos', component: PedidosComponent },
   // { path: 'clientes', component: ClientesComponent },

@@ -3,12 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { JWTToken } from '../../models/JWTToken';
-import { LoginService } from '../../servicos/login.service'; 
-
-export class DadosLogin {
-  username?: string;
-  senha?: string;
-}
+import { LoginService } from '../../servicos/login.service';
+import { Usuario } from '../../models/Usuario'; 
 
 @Component({
   selector: 'app-login',
@@ -21,9 +17,10 @@ export class LoginComponent implements OnInit {
 
   private router = inject(Router);
   private activatedRoute = inject(ActivatedRoute);
-  private loginService = inject(LoginService); // AGORA INJETADO
+  private loginService = inject(LoginService);
 
-  public usuario: DadosLogin = new DadosLogin();
+  // 2. Usando a interface Usuario e inicializando como um objeto vazio (ou com campos vazios)
+  public usuario: Usuario = { username: '', senha: '' };
   public msgAlert: string = "";
 
   ngOnInit(): void {
