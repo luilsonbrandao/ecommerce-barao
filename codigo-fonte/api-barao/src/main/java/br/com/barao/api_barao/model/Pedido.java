@@ -6,6 +6,7 @@ import lombok.*;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Table(name = "tbl_pedido")
@@ -27,7 +28,17 @@ public class Pedido {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_pedido")
-    private Integer idPedido; // Alterado de int para Integer
+    private Integer idPedido;
+
+    @Column(name = "uuid", length = 36, unique = true)
+    private String uuid;
+
+    @PrePersist
+    public void gerarUuid() {
+        if (this.uuid == null) {
+            this.uuid = UUID.randomUUID().toString();
+        }
+    }
 
     @Column(name = "data_pedido")
     private LocalDate dataPedido;

@@ -10,9 +10,11 @@ import org.springframework.data.repository.query.Param;
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 public interface PedidoDAO extends CrudRepository<Pedido, Integer> {
 
+    public Optional<Pedido> findByUuid(String uuid);
     public List<Pedido> findAllByCliente(Cliente cliente);
     public List<Pedido> findAllByStatusOrderByDataPedidoDesc(int status);
 

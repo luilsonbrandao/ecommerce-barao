@@ -1,0 +1,31 @@
+<div class="d-flex align-items-center justify-content-center vh-100 bg-dark">
+  <main class="form-signin w-100 m-auto bg-white p-5 rounded-4 shadow" style="max-width: 400px;">
+
+    <div class="text-center mb-4">
+      <img class="mb-3" src="img/logo.png" alt="Logo Barão" height="70">
+      <h1 class="h3 mb-3 fw-bold text-uppercase" style="font-size: 1.5rem;">Área Administrativa</h1>
+    </div>
+
+    @if (msgAlert) {
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>Atenção!</strong> {{ msgAlert }}
+        <button type="button" class="btn-close" (click)="msgAlert = ''" aria-label="Close"></button>
+      </div>
+    }
+
+    <div class="form-floating mb-3">
+      <input type="text" class="form-control" id="floatingInput" placeholder="Login" [(ngModel)]="usuario.username">
+      <label for="floatingInput">Seu Login</label>
+    </div>
+
+    <div class="form-floating mb-4">
+      <input type="password" class="form-control" id="floatingPassword" placeholder="Senha" [(ngModel)]="usuario.senha">
+      <label for="floatingPassword">Sua Senha</label>
+    </div>
+
+    <button class="w-100 btn btn-lg btn-warning fw-bold text-dark" (click)="autenticar()">
+      Conectar
+    </button>
+
+  </main>
+</div>

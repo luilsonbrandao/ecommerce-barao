@@ -1,0 +1,70 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark border-bottom border-warning border-3 shadow-sm">
+  <div class="container-fluid">
+
+    <a class="navbar-brand fw-bold text-warning" routerLink="/dashboard">
+      <i class="bi bi-shield-lock-fill me-2"></i>Barão Admin
+    </a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#adminNavbar"
+      aria-controls="adminNavbar" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="adminNavbar">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/dashboard" routerLinkActive="active">
+            <i class="fas fa-home me-1"></i> Dashboard
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/categorias" routerLinkActive="active">
+            <i class="fas fa-list-ul me-1"></i> Categorias
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/produtos" routerLinkActive="active">
+            <i class="fas fa-box-open me-1"></i> Produtos
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/pedidos" routerLinkActive="active">
+            <i class="far fa-file-alt me-1"></i> Pedidos
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/financeiro" routerLinkActive="active">
+            <i class="fas fa-dollar-sign me-1"></i> Financeiro
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/pagamentos" routerLinkActive="active">
+            <i class="far fa-credit-card me-1"></i> Pagamentos
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/fretes" routerLinkActive="active">
+            <i class="fas fa-shipping-fast me-1"></i> Fretes
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/clientes" routerLinkActive="active">
+            <i class="fas fa-users me-1"></i> Clientes
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/usuarios" routerLinkActive="active">
+            <i class="fas fa-key me-1"></i> Usuários
+          </a>
+        </li>
+      </ul>
+
+      <div class="d-flex">
+        <a class="nav-link text-danger fw-bold" style="cursor: pointer;" (click)="logout()">
+          <i class="fas fa-sign-out-alt me-1"></i> Sair
+        </a>
+      </div>
+    </div>
+
+  </div>
+</nav>

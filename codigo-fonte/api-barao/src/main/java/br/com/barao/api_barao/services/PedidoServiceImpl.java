@@ -2,13 +2,13 @@ package br.com.barao.api_barao.services;
 
 import br.com.barao.api_barao.dao.ClienteDAO;
 import br.com.barao.api_barao.dao.PedidoDAO;
-import br.com.barao.api_barao.dao.ProdutoDAO; // <--- IMPORT NOVO
+import br.com.barao.api_barao.dao.ProdutoDAO;
 import br.com.barao.api_barao.dto.FiltroPedidoDTO;
 import br.com.barao.api_barao.dto.VendasPorDataDTO;
 import br.com.barao.api_barao.model.Cliente;
 import br.com.barao.api_barao.model.ItemPedido;
 import br.com.barao.api_barao.model.Pedido;
-import br.com.barao.api_barao.model.Produto; // <--- IMPORT NOVO
+import br.com.barao.api_barao.model.Produto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -88,7 +88,7 @@ public class PedidoServiceImpl implements IPedidoService {
         }
     }
 
-    // --- MÉTODOS DE CONSULTA (Sem alterações) ---
+    // --- MÉTODOS DE CONSULTA ---
 
     @Override
     public List<Pedido> buscarPorStatus(int status) {
@@ -196,5 +196,11 @@ public class PedidoServiceImpl implements IPedidoService {
             }
         }
         return dao.save(pedido);
+    }
+
+    @Override
+    public Pedido buscarPeloUuid(String uuid) {
+        // Usa o método novo do DAO
+        return dao.findByUuid(uuid).orElse(null);
     }
 }

@@ -29,13 +29,15 @@ public class PedidoController {
     }
 
     // --- 2. BUSCAR PEDIDO POR ID (Recibo / Detalhes) ---
-    @GetMapping("/pedido/search/{id}")
-    public ResponseEntity<Pedido> recuperarPeloId(@PathVariable int id) {
-        Pedido pedido = service.buscarPeloId(id);
+    @GetMapping("/pedido/search/{uuid}")
+    public ResponseEntity<Pedido> recuperarPeloUuid(@PathVariable String uuid) {
+
+        Pedido pedido = service.buscarPeloUuid(uuid); // Chama o serviço novo
+
         if (pedido != null) {
             return ResponseEntity.ok(pedido);
         }
-        return ResponseEntity.notFound().build();
+        return ResponseEntity.notFound().build(); // Retorna 404 se o código estiver errado
     }
 
     // --- 3. FILTRAR PEDIDOS (Painel Administrativo) ---

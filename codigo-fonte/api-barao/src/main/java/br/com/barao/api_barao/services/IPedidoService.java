@@ -20,4 +20,5 @@ public interface IPedidoService {
     public List<Pedido> filtrarPorVariosCriterios(FiltroPedidoDTO filtro);
     public List<VendasPorDataDTO> recuperarTotaisUltimaSemana(LocalDate inicio, LocalDate fim);
     public Pedido buscarPeloId(int id);
+    public Pedido buscarPeloUuid(String uuid);
 }
