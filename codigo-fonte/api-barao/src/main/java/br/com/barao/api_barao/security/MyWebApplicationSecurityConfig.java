@@ -46,7 +46,6 @@ public class MyWebApplicationSecurityConfig {
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html").permitAll()
 
                         // --- 3. Regras de Negócio Públicas (GET) ---
-                        // O uso de '/**' cobre subcaminhos como /search, /categoria/{id}, etc.
                         .requestMatchers(HttpMethod.GET, "/categoria", "/categoria/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/produto", "/produto/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/fretes", "/fretes/**", "/fretesdisponiveis").permitAll()
