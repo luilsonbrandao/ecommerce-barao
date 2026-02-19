@@ -5,6 +5,9 @@ import { CategoriasComponent } from './componentes/categorias/categorias.compone
 import { EditorcategoriaComponent } from './componentes/editorcategoria/editorcategoria.component';
 import { ProdutosComponent } from './componentes/produtos/produtos.component';
 import { EditorprodutosComponent } from './componentes/editorprodutos/editorprodutos.component';
+import { PedidosComponent } from './componentes/pedidos/pedidos.component';
+import { ClientesComponent } from './componentes/clientes/clientes.component';
+import { UsuariosComponent } from './componentes/usuarios/usuarios.component';
 
 export const routes: Routes = [
   // Redireciona a rota vazia para a tela de login
@@ -21,6 +24,7 @@ export const routes: Routes = [
   { path: 'editorcategoria/:id', component: EditorcategoriaComponent },
   { path: 'produtos', component: ProdutosComponent },
   { path: 'editorproduto/:id', component: EditorprodutosComponent },
-  // { path: 'pedidos', component: PedidosComponent },
-  // { path: 'clientes', component: ClientesComponent },
+  { path: 'pedidos', component: PedidosComponent },
+  { path: 'clientes', component: ClientesComponent },
+  { path: 'usuarios', component: UsuariosComponent },
 ];

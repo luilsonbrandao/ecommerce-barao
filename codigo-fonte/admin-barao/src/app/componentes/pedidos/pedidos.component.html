@@ -1,0 +1,205 @@
+<app-navbar></app-navbar>
+
+<div class="container-fluid mt-4 mb-5">
+  <div class="row mb-3 border-bottom pb-2">
+    <div class="col-12">
+      <h3 class="fw-bold m-0"><i class="far fa-file-alt me-2 text-warning"></i> Gerenciar Pedidos</h3>
+    </div>
+  </div>
+
+  <div class="card shadow-sm border-0 mb-4 bg-light">
+    <div class="card-body">
+      <h6 class="fw-bold mb-3"><i class="fas fa-filter me-1"></i> Filtros de Busca</h6>
+      <div class="row g-3 align-items-end">
+        <div class="col-md-2">
+          <label class="form-label small">Data Inicial</label>
+          <input type="date" class="form-control form-control-sm" [(ngModel)]="filtroPedido.dataInicio">
+        </div>
+        <div class="col-md-2">
+          <label class="form-label small">Data Final</label>
+          <input type="date" class="form-control form-control-sm" [(ngModel)]="filtroPedido.dataFim">
+        </div>
+        <div class="col-md-3">
+          <label class="form-label small">Nome do Cliente</label>
+          <input type="text" class="form-control form-control-sm" placeholder="Busca por nome..." [(ngModel)]="filtroPedido.nome">
+        </div>
+
+        <div class="col-md-4">
+          <label class="form-label small d-block text-center">Filtrar por Status</label>
+          <div class="d-flex justify-content-center gap-1 flex-wrap">
+            <input type="checkbox" class="btn-check" id="fNovo" [(ngModel)]="filtroPedido.novo">
+            <label class="btn btn-outline-primary btn-sm px-2 py-1" for="fNovo" title="Novo"><i class="far fa-clipboard"></i></label>
+
+            <input type="checkbox" class="btn-check" id="fPago" [(ngModel)]="filtroPedido.pago">
+            <label class="btn btn-outline-success btn-sm px-2 py-1" for="fPago" title="Pago"><i class="fas fa-dollar-sign"></i></label>
+
+            <input type="checkbox" class="btn-check" id="fTrans" [(ngModel)]="filtroPedido.transporte">
+            <label class="btn btn-outline-warning btn-sm px-2 py-1" for="fTrans" title="Transporte"><i class="fas fa-shipping-fast"></i></label>
+
+            <input type="checkbox" class="btn-check" id="fEntr" [(ngModel)]="filtroPedido.entregue">
+            <label class="btn btn-outline-info btn-sm px-2 py-1" for="fEntr" title="Entregue"><i class="fas fa-hand-holding-heart"></i></label>
+
+            <input type="checkbox" class="btn-check" id="fCanc" [(ngModel)]="filtroPedido.cancelado">
+            <label class="btn btn-outline-danger btn-sm px-2 py-1" for="fCanc" title="Cancelado"><i class="fas fa-window-close"></i></label>
+          </div>
+        </div>
+
+        <div class="col-md-1 d-flex gap-1 justify-content-end">
+          <button class="btn btn-primary btn-sm" (click)="filtrarPedidos()"><i class="fas fa-search"></i></button>
+          <button class="btn btn-secondary btn-sm" (click)="limparFiltros()"><i class="fas fa-eraser"></i></button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-end mb-2">
+    <h5 class="fw-bold bg-dark text-white px-3 py-2 rounded shadow-sm">
+      Total na tela: <span class="text-warning">{{ total | currency:'BRL' }}</span>
+    </h5>
+  </div>
+
+  <div class="card shadow-sm border-0">
+    <div class="card-body p-0 table-responsive">
+      <table class="table table-hover table-striped m-0 align-middle" style="font-size: 0.9rem;">
+        <thead class="table-dark">
+          <tr>
+            <th scope="col" class="ps-3">#</th>
+            <th scope="col">Data</th>
+            <th scope="col">Cliente</th>
+            <th scope="col">Total</th>
+            <th scope="col" class="text-center">Retirar</th>
+            <th scope="col" class="text-center">Status</th>
+            <th scope="col" class="text-center pe-3">Avançar Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (ITEM of lista; track ITEM.idPedido) {
+            <tr>
+              <td class="ps-3 fw-bold">
+                <a href="javascript:void(0)" class="text-decoration-none text-primary" (click)="abrirDetalhes(ITEM)">
+                  {{ ITEM.idPedido }} <i class="fas fa-external-link-alt ms-1 small"></i>
+                </a>
+              </td>
+              <td>{{ ITEM.dataPedido | date: 'dd/MM/yyyy' }}</td>
+              <td class="text-truncate" style="max-width: 150px;" title="{{ITEM.cliente?.nome}}">
+                {{ ITEM.cliente?.nome }}
+              </td>
+              <td class="fw-bold text-success">{{ ITEM.valorTotal | currency:'BRL' }}</td>
+              <td class="text-center">
+                @if (ITEM.retirar === 1) { <span class="badge bg-warning text-dark"><i class="fas fa-store"></i> Sim</span> }
+                @else { <span class="badge bg-secondary">Não</span> }
+              </td>
+
+              <td class="text-center">
+                <span class="badge {{ getBadgeClass(ITEM.status) }}">
+                  @switch (ITEM.status) {
+                    @case (StatusEnum.NOVO_PEDIDO) { Novo }
+                    @case (StatusEnum.PAGO) { Pago }
+                    @case (StatusEnum.EM_TRANSPORTE) { Transporte }
+                    @case (StatusEnum.ENTREGUE) { Entregue }
+                    @case (StatusEnum.POS_VENDA) { Pós Venda }
+                    @case (StatusEnum.FINALIZADO) { Finalizado }
+                    @case (StatusEnum.CANCELADO) { Cancelado }
+                  }
+                </span>
+              </td>
+
+              <td class="text-center pe-3">
+                <div class="btn-group btn-group-sm" role="group">
+                  <button class="btn btn-outline-success" title="Marcar Pago" (click)="gerarFinanceiro(ITEM)" [disabled]="ITEM.status === StatusEnum.PAGO || ITEM.status === StatusEnum.CANCELADO">
+                    <i class="fas fa-dollar-sign"></i>
+                  </button>
+                  <button class="btn btn-outline-warning" title="Em Transporte" (click)="alterarStatus(ITEM, StatusEnum.EM_TRANSPORTE)" [disabled]="ITEM.status >= StatusEnum.EM_TRANSPORTE || ITEM.status === StatusEnum.CANCELADO">
+                    <i class="fas fa-shipping-fast"></i>
+                  </button>
+                  <button class="btn btn-outline-info" title="Entregue" (click)="alterarStatus(ITEM, StatusEnum.ENTREGUE)" [disabled]="ITEM.status >= StatusEnum.ENTREGUE || ITEM.status === StatusEnum.CANCELADO">
+                    <i class="fas fa-box-open"></i>
+                  </button>
+                  <button class="btn btn-outline-danger" title="Cancelar Pedido" (click)="alterarStatus(ITEM, StatusEnum.CANCELADO)" [disabled]="ITEM.status === StatusEnum.CANCELADO || ITEM.status === StatusEnum.FINALIZADO">
+                    <i class="fas fa-times"></i>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          } @empty {
+            <tr><td colspan="7" class="text-center py-4 text-muted">Nenhum pedido encontrado.</td></tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+@if (detalhe) {
+  <div class="modal d-block" style="background-color: rgba(0,0,0,0.5);" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header bg-dark text-white">
+          <h5 class="modal-title"><i class="fas fa-shopping-cart me-2"></i> Pedido #{{ detalhe.idPedido }}</h5>
+          <button type="button" class="btn-close btn-close-white" (click)="fecharDetalhes()"></button>
+        </div>
+        <div class="modal-body">
+          <div class="row mb-3 border-bottom pb-3">
+            <div class="col-md-6">
+              <h6 class="fw-bold text-primary mb-1">{{ detalhe.cliente?.nome }}</h6>
+              <p class="text-muted small mb-0"><i class="fab fa-whatsapp text-success"></i> {{ detalhe.cliente?.telefone }}</p>
+              <p class="text-muted small mb-0 mt-2">
+                <i class="fas fa-map-marker-alt"></i> {{ detalhe.cliente?.logradouro }}, {{ detalhe.cliente?.numero }}<br>
+                {{ detalhe.cliente?.bairro }} - {{ detalhe.cliente?.cidade }}
+              </p>
+            </div>
+            <div class="col-md-6">
+              <div class="row g-2">
+                <div class="col-6">
+                  <label class="small fw-bold">Retirar na Loja?</label>
+                  <select [(ngModel)]="detalhe.retirar" class="form-select form-select-sm">
+                    <option value="0">Não (Entregar)</option>
+                    <option value="1">Sim (Balcão)</option>
+                  </select>
+                </div>
+                <div class="col-6">
+                  <label class="small fw-bold">Valor do Frete (R$)</label>
+                  <input class="form-control form-control-sm" type="number" [(ngModel)]="detalhe.valorFrete">
+                </div>
+                <div class="col-12">
+                  <label class="small fw-bold">Observações Internas</label>
+                  <input class="form-control form-control-sm" type="text" [(ngModel)]="detalhe.observacoes">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <h6 class="fw-bold mb-2">Itens Comprados</h6>
+          <div class="table-responsive">
+            <table class="table table-sm table-bordered mb-0">
+              <thead class="table-light">
+                <tr><th>Produto</th><th class="text-center">Qtd</th><th class="text-end">Unitário</th><th class="text-end">Total</th></tr>
+              </thead>
+              <tbody>
+                @for (item of detalhe.itensPedido; track item.produto?.id) {
+                  <tr>
+                    <td class="small">{{ item.produto?.nome }}</td>
+                    <td class="text-center small">{{ item.qtdeItem }}</td>
+                    <td class="text-end small">{{ item.precoUnitario | currency: 'BRL' }}</td>
+                    <td class="text-end small fw-bold">{{ item.precoTotal | currency: 'BRL' }}</td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+
+          <div class="text-end mt-3">
+            <h5 class="fw-bold text-success">Total a Cobrar: {{ detalhe.valorTotal | currency: 'BRL' }}</h5>
+          </div>
+
+        </div>
+        <div class="modal-footer bg-light">
+          <button type="button" class="btn btn-secondary" (click)="fecharDetalhes()">Cancelar</button>
+          <button type="button" class="btn btn-primary fw-bold" (click)="atualizarPedidoDetalhe()">
+            <i class="fas fa-save me-1"></i> Salvar Alterações
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+}
