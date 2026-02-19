@@ -8,6 +8,7 @@ import { EditorprodutosComponent } from './componentes/editorprodutos/editorprod
 import { PedidosComponent } from './componentes/pedidos/pedidos.component';
 import { ClientesComponent } from './componentes/clientes/clientes.component';
 import { UsuariosComponent } from './componentes/usuarios/usuarios.component';
+import { EditorusuarioComponent } from './componentes/editorusuario/editorusuario.component';
 
 export const routes: Routes = [
   // Redireciona a rota vazia para a tela de login
@@ -27,4 +28,6 @@ export const routes: Routes = [
   { path: 'pedidos', component: PedidosComponent },
   { path: 'clientes', component: ClientesComponent },
   { path: 'usuarios', component: UsuariosComponent },
+  { path: 'editorusuario/:id', component: EditorusuarioComponent },
+  {path: 'dashboard', component: DashboardComponent},
 ];

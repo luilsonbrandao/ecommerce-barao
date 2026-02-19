@@ -1,0 +1,74 @@
+<app-navbar></app-navbar>
+
+<div class="container mt-4 mb-5">
+  <div class="row mb-4 border-bottom pb-2">
+    <div class="col-12">
+      <h3 class="fw-bold text-primary">
+        <i class="fas fa-user-shield me-2"></i> {{ mode === 0 ? 'Novo Usuário' : 'Editar Usuário' }}
+      </h3>
+    </div>
+  </div>
+
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card shadow-sm border-0 p-4">
+
+        <h6 class="fw-bold text-secondary border-bottom pb-2 mb-3">Dados de Acesso Administrativo</h6>
+
+        <div class="mb-3">
+          <label class="form-label fw-bold small">Nome Completo</label>
+          <input type="text" class="form-control" [(ngModel)]="usuario.nome" placeholder="Nome do administrador">
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-md-7">
+            <label class="form-label fw-bold small">Email</label>
+            <input type="email" class="form-control" [(ngModel)]="usuario.email" (keyup)="sugereUsername()" placeholder="exemplo@email.com">
+          </div>
+          <div class="col-md-5">
+            <label class="form-label fw-bold small">Username de Login</label>
+            <div class="input-group">
+              <span class="input-group-text bg-light"><i class="fas fa-at text-muted"></i></span>
+              <input type="text" class="form-control" [(ngModel)]="usuario.username">
+            </div>
+          </div>
+        </div>
+
+        <div class="row mb-4">
+          <div class="col-md-6">
+            <label class="form-label fw-bold small">Senha</label>
+            <input type="password" class="form-control" [(ngModel)]="usuario.senha" (keyup)="confereSenha()" placeholder="Digite a senha">
+          </div>
+          <div class="col-md-6">
+            <label class="form-label fw-bold small">Confirmar Senha</label>
+            <input type="password" class="form-control" [ngClass]="{'is-invalid': !senhasIguais && senhaConfirmacao !== ''}" [(ngModel)]="senhaConfirmacao" (keyup)="confereSenha()" placeholder="Repita a senha">
+            @if (!senhasIguais && senhaConfirmacao !== '') {
+              <div class="invalid-feedback fw-bold">As senhas não conferem!</div>
+            }
+          </div>
+        </div>
+
+        @if (mode === 1) {
+          <div class="mb-4 bg-light p-3 rounded">
+            <div class="form-check form-switch fs-5">
+              <input #chkBoxAtivo class="form-check-input" type="checkbox" role="switch" id="chkAtivo"
+                     [checked]="usuario.ativo === 1"
+                     (change)="usuario.ativo = chkBoxAtivo.checked ? 1 : 0">
+              <label class="form-check-label fs-6 ms-2 pt-1" for="chkAtivo">
+                Usuário {{ usuario.ativo === 1 ? 'Ativo e Liberado' : 'Bloqueado no Sistema' }}
+              </label>
+            </div>
+          </div>
+        }
+
+        <div class="d-flex gap-2">
+          <button class="btn btn-primary fw-bold px-4" (click)="salvarUsuario()" [disabled]="!senhasIguais || !usuario.nome || !usuario.username">
+            <i class="fas fa-save me-1"></i> Salvar Usuário
+          </button>
+          <a class="btn btn-outline-secondary px-4" routerLink="/usuarios">Cancelar</a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
