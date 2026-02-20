@@ -1,5 +1,6 @@
 package br.com.barao.api_barao.controller;
 
+import br.com.barao.api_barao.dto.CompradorDTO;
 import br.com.barao.api_barao.dto.FiltroPedidoDTO;
 import br.com.barao.api_barao.dto.VendasPorDataDTO;
 import br.com.barao.api_barao.model.Pedido;
@@ -88,5 +89,21 @@ public class PedidoController {
             ex.printStackTrace();
             return ResponseEntity.badRequest().build();
         }
+    }
+
+    // --- 7. BUSCAR PEDIDO COMPLETO (Modal do Painel Admin) ---
+    @GetMapping("/pedido/detalhes/{id}")
+    public ResponseEntity<Pedido> recuperarPedidoCompleto(@PathVariable int id) {
+        Pedido pedido = service.buscarPeloId(id);
+        if (pedido != null) {
+            return ResponseEntity.ok(pedido);
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    // --- 8. LISTAR COMPRADORES DE UM PRODUTO ---
+    @GetMapping("/pedido/produto/{idProduto}/compradores")
+    public ResponseEntity<List<CompradorDTO>> listarCompradores(@PathVariable int idProduto) {
+        return ResponseEntity.ok(service.buscarCompradoresDoProduto(idProduto));
     }
 }

@@ -2,14 +2,13 @@ import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { NavbarComponent } from '../navbar/navbar.component';
 import { Usuario } from '../../models/Usuario';
 import { UsuarioService } from '../../servicos/usuario.service';
 
 @Component({
   selector: 'app-usuarios',
   standalone: true,
-  imports: [CommonModule, FormsModule, NavbarComponent, RouterLink],
+  imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './usuarios.component.html'
 })
 export class UsuariosComponent implements OnInit {

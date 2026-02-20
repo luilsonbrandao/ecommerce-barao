@@ -3,6 +3,7 @@ package br.com.barao.api_barao.services;
 import br.com.barao.api_barao.dao.ClienteDAO;
 import br.com.barao.api_barao.dao.PedidoDAO;
 import br.com.barao.api_barao.dao.ProdutoDAO;
+import br.com.barao.api_barao.dto.CompradorDTO;
 import br.com.barao.api_barao.dto.FiltroPedidoDTO;
 import br.com.barao.api_barao.dto.VendasPorDataDTO;
 import br.com.barao.api_barao.model.Cliente;
@@ -19,7 +20,8 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class PedidoServiceImpl implements IPedidoService {
+public
+class PedidoServiceImpl implements IPedidoService {
 
     private final PedidoDAO dao;
     private final ClienteDAO cliDao;
@@ -202,5 +204,9 @@ public class PedidoServiceImpl implements IPedidoService {
     public Pedido buscarPeloUuid(String uuid) {
         // Usa o método novo do DAO
         return dao.findByUuid(uuid).orElse(null);
+    }
+    @Override
+    public List<CompradorDTO> buscarCompradoresDoProduto(int idProduto) {
+        return dao.buscarCompradoresPorProduto(idProduto);
     }
 }

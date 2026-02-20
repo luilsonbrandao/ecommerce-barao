@@ -2,7 +2,6 @@ import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { NavbarComponent } from '../navbar/navbar.component';
 import { Produto } from '../../models/produto.model';
 import { Categoria } from '../../models/categoria.model';
 import { PathDTO } from '../../models/path-dto.model';
@@ -12,7 +11,7 @@ import { CategoriaService } from '../../servicos/categoria.service';
 @Component({
   selector: 'app-editorprodutos',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink, NavbarComponent],
+  imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './editorprodutos.component.html',
   styleUrls: ['./editorprodutos.component.css']
 })

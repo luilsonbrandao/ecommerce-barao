@@ -1,70 +1,70 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark border-bottom border-warning border-3 shadow-sm">
-  <div class="container-fluid">
+<div class="offcanvas-lg offcanvas-start text-bg-dark shadow-sm h-100" tabindex="-1" id="sidebarMenu" style="width: 260px;">
 
-    <a class="navbar-brand fw-bold text-warning" routerLink="/dashboard">
-      <i class="bi bi-shield-lock-fill me-2"></i>Barão Admin
-    </a>
-
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#adminNavbar"
-      aria-controls="adminNavbar" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="adminNavbar">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/dashboard" routerLinkActive="active">
-            <i class="fas fa-home me-1"></i> Dashboard
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/categorias" routerLinkActive="active">
-            <i class="fas fa-list-ul me-1"></i> Categorias
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/produtos" routerLinkActive="active">
-            <i class="fas fa-box-open me-1"></i> Produtos
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/pedidos" routerLinkActive="active">
-            <i class="far fa-file-alt me-1"></i> Pedidos
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/financeiro" routerLinkActive="active">
-            <i class="fas fa-dollar-sign me-1"></i> Financeiro
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/pagamentos" routerLinkActive="active">
-            <i class="far fa-credit-card me-1"></i> Pagamentos
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/fretes" routerLinkActive="active">
-            <i class="fas fa-shipping-fast me-1"></i> Fretes
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/clientes" routerLinkActive="active">
-            <i class="fas fa-users me-1"></i> Clientes
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/usuarios" routerLinkActive="active">
-            <i class="fas fa-key me-1"></i> Usuários
-          </a>
-        </li>
-      </ul>
-
-      <div class="d-flex">
-        <a class="nav-link text-danger fw-bold" style="cursor: pointer;" (click)="logout()">
-          <i class="fas fa-sign-out-alt me-1"></i> Sair
-        </a>
-      </div>
-    </div>
-
+  <div class="offcanvas-header border-bottom border-secondary border-opacity-50 p-4">
+    <h5 class="offcanvas-title fw-bold text-warning m-0"><i class="bi bi-shield-lock-fill"></i> Barão Admin</h5>
+    <button type="button" class="btn-close btn-close-white d-lg-none" data-bs-dismiss="offcanvas" data-bs-target="#sidebarMenu"></button>
   </div>
-</nav>
+
+  <div class="offcanvas-body d-flex flex-column p-3">
+    <ul class="nav nav-pills flex-column mb-auto w-100 gap-1">
+      <li class="nav-item">
+        <a class="nav-link text-white" routerLink="/dashboard" routerLinkActive="active">
+          <i class="fas fa-home" style="width: 25px;"></i> Dashboard
+        </a>
+      </li>
+
+      <li class="nav-item text-uppercase text-muted fw-bold mb-1 mt-3 px-2" style="font-size: 0.75rem;">Catálogo</li>
+      <li class="nav-item">
+        <a class="nav-link text-white" routerLink="/categorias" routerLinkActive="active">
+          <i class="fas fa-list-ul" style="width: 25px;"></i> Categorias
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-white" routerLink="/produtos" routerLinkActive="active">
+          <i class="fas fa-box-open" style="width: 25px;"></i> Produtos
+        </a>
+      </li>
+
+      <li class="nav-item text-uppercase text-muted fw-bold mb-1 mt-3 px-2" style="font-size: 0.75rem;">Vendas & Clientes</li>
+      <li class="nav-item">
+        <a class="nav-link text-white" routerLink="/pedidos" routerLinkActive="active">
+          <i class="far fa-file-alt" style="width: 25px;"></i> Pedidos
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-white" routerLink="/clientes" routerLinkActive="active">
+          <i class="fas fa-users" style="width: 25px;"></i> Clientes
+        </a>
+      </li>
+
+      <li class="nav-item text-uppercase text-muted fw-bold mb-1 mt-3 px-2" style="font-size: 0.75rem;">Financeiro</li>
+      <li class="nav-item">
+        <a class="nav-link text-white" routerLink="/financeiro" routerLinkActive="active">
+          <i class="fas fa-dollar-sign" style="width: 25px;"></i> Financeiro
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-white" routerLink="/pagamentos" routerLinkActive="active">
+          <i class="far fa-credit-card" style="width: 25px;"></i> Pagamentos
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-white" routerLink="/fretes" routerLinkActive="active">
+          <i class="fas fa-shipping-fast" style="width: 25px;"></i> Fretes
+        </a>
+      </li>
+
+      <li class="nav-item text-uppercase text-muted fw-bold mb-1 mt-3 px-2" style="font-size: 0.75rem;">Configurações</li>
+      <li class="nav-item">
+        <a class="nav-link text-white" routerLink="/usuarios" routerLinkActive="active">
+          <i class="fas fa-key" style="width: 25px;"></i> Usuários
+        </a>
+      </li>
+    </ul>
+
+    <hr class="border-secondary border-opacity-50">
+    <button class="btn btn-danger w-100 fw-bold shadow-sm" (click)="logout()">
+      <i class="fas fa-sign-out-alt me-2"></i> Sair do Sistema
+    </button>
+  </div>
+</div>

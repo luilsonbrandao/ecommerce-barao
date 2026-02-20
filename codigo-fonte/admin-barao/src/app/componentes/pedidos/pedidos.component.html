@@ -1,5 +1,3 @@
-<app-navbar></app-navbar>
-
 <div class="container-fluid mt-4 mb-5">
   <div class="row mb-3 border-bottom pb-2">
     <div class="col-12">
@@ -106,7 +104,7 @@
 
               <td class="text-center pe-3">
                 <div class="btn-group btn-group-sm" role="group">
-                  <button class="btn btn-outline-success" title="Marcar Pago" (click)="gerarFinanceiro(ITEM)" [disabled]="ITEM.status === StatusEnum.PAGO || ITEM.status === StatusEnum.CANCELADO">
+                  <button class="btn btn-outline-success" title="Marcar Pago / Faturar" (click)="gerarFinanceiro(ITEM)" [disabled]="ITEM.status === StatusEnum.PAGO || ITEM.status === StatusEnum.CANCELADO">
                     <i class="fas fa-dollar-sign"></i>
                   </button>
                   <button class="btn btn-outline-warning" title="Em Transporte" (click)="alterarStatus(ITEM, StatusEnum.EM_TRANSPORTE)" [disabled]="ITEM.status >= StatusEnum.EM_TRANSPORTE || ITEM.status === StatusEnum.CANCELADO">
@@ -176,9 +174,9 @@
                 <tr><th>Produto</th><th class="text-center">Qtd</th><th class="text-end">Unitário</th><th class="text-end">Total</th></tr>
               </thead>
               <tbody>
-                @for (item of detalhe.itensPedido; track item.produto?.id) {
+                @for (item of detalhe.itensPedido; track item.produto.id) {
                   <tr>
-                    <td class="small">{{ item.produto?.nome }}</td>
+                    <td class="small">{{ item.produto.nome }}</td>
                     <td class="text-center small">{{ item.qtdeItem }}</td>
                     <td class="text-end small">{{ item.precoUnitario | currency: 'BRL' }}</td>
                     <td class="text-end small fw-bold">{{ item.precoTotal | currency: 'BRL' }}</td>
@@ -187,7 +185,6 @@
               </tbody>
             </table>
           </div>
-
           <div class="text-end mt-3">
             <h5 class="fw-bold text-success">Total a Cobrar: {{ detalhe.valorTotal | currency: 'BRL' }}</h5>
           </div>
@@ -197,6 +194,53 @@
           <button type="button" class="btn btn-secondary" (click)="fecharDetalhes()">Cancelar</button>
           <button type="button" class="btn btn-primary fw-bold" (click)="atualizarPedidoDetalhe()">
             <i class="fas fa-save me-1"></i> Salvar Alterações
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+}
+
+@if (registroFinanceiro) {
+  <div class="modal d-block" style="background-color: rgba(0,0,0,0.6);" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content shadow-lg border-0">
+        <div class="modal-header bg-success text-white">
+          <h5 class="modal-title fw-bold"><i class="fas fa-money-check-alt me-2"></i> Gerar Financeiro - Pedido #{{ registroFinanceiro.pedido?.idPedido }}</h5>
+          <button type="button" class="btn-close btn-close-white" (click)="fecharModalFinanceiro()"></button>
+        </div>
+        <div class="modal-body bg-light">
+          <p class="text-muted small mb-4">Preencha os dados de pagamento para gerar a previsão de recebimento no caixa.</p>
+
+          <div class="mb-3">
+            <label class="form-label fw-bold small">Forma de Pagamento Utilizada</label>
+            <select class="form-select" [(ngModel)]="registroFinanceiro.formaPagamento!.numSeq">
+              @for (forma of formasPgto; track forma.numSeq) {
+                <option [value]="forma.numSeq">{{ forma.descricao }} (Taxa: {{ forma.retencao }}%)</option>
+              }
+            </select>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label fw-bold small">Qtd. de Parcelas</label>
+              <input type="number" class="form-control" min="1" max="12" [(ngModel)]="registroFinanceiro.totalParcelas">
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label fw-bold small">Dia do Vencimento</label>
+              <input type="number" class="form-control" min="1" max="31" [(ngModel)]="registroFinanceiro.diaVencimento" placeholder="Ex: 5">
+            </div>
+          </div>
+
+          <div class="alert alert-warning border-0 small mt-2">
+            <i class="fas fa-info-circle me-1"></i> O valor total do pedido ({{ registroFinanceiro.pedido?.valorTotal | currency:'BRL' }}) será dividido na quantidade de parcelas informada acima.
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" (click)="fecharModalFinanceiro()">Cancelar</button>
+          <button type="button" class="btn btn-success fw-bold" (click)="confirmarFluxoFinanceiro()">
+            <i class="fas fa-check me-1"></i> Confirmar e Faturar
           </button>
         </div>
       </div>

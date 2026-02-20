@@ -1,14 +1,13 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { NavbarComponent } from '../navbar/navbar.component';
 import { Categoria } from '../../models/categoria.model';
 import { CategoriaService } from '../../servicos/categoria.service';
 
 @Component({
   selector: 'app-categorias',
   standalone: true,
-  imports: [CommonModule, RouterLink, NavbarComponent],
+  imports: [CommonModule, RouterLink],
   templateUrl: './categorias.component.html',
   styleUrls: ['./categorias.component.css']
 })

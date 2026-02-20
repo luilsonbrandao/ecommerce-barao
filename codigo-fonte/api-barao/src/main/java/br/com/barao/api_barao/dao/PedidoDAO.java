@@ -1,5 +1,6 @@
 package br.com.barao.api_barao.dao;
 
+import br.com.barao.api_barao.dto.CompradorDTO;
 import br.com.barao.api_barao.dto.VendasPorDataDTO;
 import br.com.barao.api_barao.model.Cliente;
 import br.com.barao.api_barao.model.Pedido;
@@ -41,4 +42,9 @@ public interface PedidoDAO extends CrudRepository<Pedido, Integer> {
             + " ORDER BY ped.dataPedido ASC")
     public List<VendasPorDataDTO> recuperarVendasPorData(@Param("dataIni") LocalDate dataIni,
                                                          @Param("dataFim") LocalDate dataFim);
+
+    @Query("SELECT DISTINCT new br.com.barao.api_barao.dto.CompradorDTO(cli.nome, cli.email, cli.telefone) "
+            + " FROM Pedido ped JOIN ped.cliente cli JOIN ped.itensPedido item "
+            + " WHERE item.produto.id = :idProduto AND ped.status <> 7")
+    public List<CompradorDTO> buscarCompradoresPorProduto(@Param("idProduto") int idProduto);
 }

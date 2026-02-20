@@ -1,0 +1,53 @@
+<div class="row mb-4">
+  <div class="col-md-4 mb-3 mb-md-0">
+    <div class="card shadow-sm border-0 bg-primary text-white h-100">
+      <div class="card-body text-center">
+        <h6 class="text-uppercase fw-bold opacity-75">Pendentes / Novos</h6>
+        <h3 class="fw-bold mb-0">{{ totalPendentes | currency : 'BRL' }}</h3>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4 mb-3 mb-md-0">
+    <div class="card shadow-sm border-0 bg-success text-white h-100">
+      <div class="card-body text-center">
+        <h6 class="text-uppercase fw-bold opacity-75">Total Pagos / Faturados</h6>
+        <h3 class="fw-bold mb-0">{{ totalPago | currency : 'BRL' }}</h3>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card shadow-sm border-0 bg-danger text-white h-100">
+      <div class="card-body text-center">
+        <h6 class="text-uppercase fw-bold opacity-75">Pedidos Cancelados</h6>
+        <h3 class="fw-bold mb-0">{{ totalCancelado | currency : 'BRL' }}</h3>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card shadow-sm border-0">
+  <div class="card-body p-0">
+    <h5 class="fw-bold text-secondary p-3 m-0 border-bottom">
+      <i class="fas fa-list-ol me-2"></i> Últimos Pedidos (7 Dias)
+    </h5>
+    <div class="table-responsive">
+      <table class="table table-hover table-striped m-0 align-middle">
+        <thead class="table-dark">
+          <tr><th class="ps-3">#</th><th>Data</th><th>Cliente</th><th>Total R$</th></tr>
+        </thead>
+        <tbody>
+          @for (ITEM of lista; track ITEM.idPedido) {
+            <tr>
+              <td class="ps-3 fw-bold">{{ ITEM.idPedido }}</td>
+              <td>{{ ITEM.dataPedido | date : 'dd/MM/yyyy' }}</td>
+              <td class="text-truncate" style="max-width: 150px;">{{ ITEM.cliente?.nome }}</td>
+              <td class="fw-bold text-success">{{ ITEM.valorTotal | currency:'BRL' }}</td>
+            </tr>
+          } @empty {
+            <tr><td colspan="4" class="text-center py-4 text-muted">Nenhum pedido recente.</td></tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

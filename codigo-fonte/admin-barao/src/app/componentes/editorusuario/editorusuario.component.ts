@@ -2,14 +2,13 @@ import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { NavbarComponent } from '../navbar/navbar.component';
 import { Usuario } from '../../models/Usuario';
 import { UsuarioService } from '../../servicos/usuario.service';
 
 @Component({
   selector: 'app-editorusuario',
   standalone: true,
-  imports: [CommonModule, FormsModule, NavbarComponent, RouterLink],
+  imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './editorusuario.component.html',
   styleUrls: ['./editorusuario.component.css']
 })

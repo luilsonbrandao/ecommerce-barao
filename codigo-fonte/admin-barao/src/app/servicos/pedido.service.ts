@@ -37,4 +37,12 @@ export class PedidoService {
   public atualizarPedido(pedido: Pedido): Observable<Pedido> {
     return this.http.put<Pedido>(this.apiUrl, pedido, this.getAuthHeaders());
   }
+
+  public getPedidoById(id: number): Observable<Pedido> {
+    return this.http.get<Pedido>(`${this.apiUrl}/${id}`, this.getAuthHeaders());
+  }
+
+  public getPedidoCompleto(id: number): Observable<Pedido> {
+    return this.http.get<Pedido>(`${this.apiUrl}/detalhes/${id}`, this.getAuthHeaders());
+  }
 }

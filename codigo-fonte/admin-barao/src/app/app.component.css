@@ -1,0 +1,7 @@
+/* Empurra o conteúdo para não ficar escondido atrás da Sidebar no Desktop */
+@media (min-width: 992px) {
+  body {
+    padding-left: 260px !important;
+    background-color: #f8f9fa; /* Fundo levemente cinza para destacar os cards brancos */
+  }
+}

@@ -84,8 +84,6 @@ public class ProdutoController {
         Categoria cat = new Categoria();
         cat.setId(idCateg);
 
-        // ATENÇÃO: Você precisará atualizar seu IProdutoService para aceitar (Categoria, int page)
-        // e retornar Page<Produto>. O padrão é 10 ou 12 itens por página.
         return ResponseEntity.ok(service.listarPorCategoria(cat, page));
     }
 

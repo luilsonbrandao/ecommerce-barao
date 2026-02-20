@@ -9,6 +9,11 @@ import { PedidosComponent } from './componentes/pedidos/pedidos.component';
 import { ClientesComponent } from './componentes/clientes/clientes.component';
 import { UsuariosComponent } from './componentes/usuarios/usuarios.component';
 import { EditorusuarioComponent } from './componentes/editorusuario/editorusuario.component';
+import { FretesComponent } from './componentes/fretes/fretes.component';
+import { EditorfreteComponent } from './componentes/editorfrete/editorfrete.component';
+import { PagamentosComponent } from './componentes/pagamentos/pagamentos.component';
+import { EditorpagamentosComponent } from './componentes/editorpagamentos/editorpagamentos.component';
+import { FinanceiroComponent } from './componentes/financeiro/financeiro.component';
 
 export const routes: Routes = [
   // Redireciona a rota vazia para a tela de login
@@ -30,4 +35,9 @@ export const routes: Routes = [
   { path: 'usuarios', component: UsuariosComponent },
   { path: 'editorusuario/:id', component: EditorusuarioComponent },
   {path: 'dashboard', component: DashboardComponent},
+  { path: 'fretes', component: FretesComponent },
+  { path: 'editorfrete/:id', component: EditorfreteComponent },
+  { path: 'pagamentos', component: PagamentosComponent },
+  { path: 'editorpagamentos/:id', component: EditorpagamentosComponent },
+  { path: 'financeiro', component: FinanceiroComponent },
 ];

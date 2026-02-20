@@ -1,3 +1,22 @@
+@if (mostrarSidebar()) {
+  <nav class="navbar navbar-dark bg-dark d-lg-none px-3 shadow-sm border-bottom border-warning border-3">
+    <a class="navbar-brand fw-bold text-warning" href="#">
+      <i class="bi bi-shield-lock-fill me-2"></i> Barão Admin
+    </a>
+    <button class="navbar-toggler border-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarMenu">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  </nav>
+}
 
+<div class="d-flex flex-nowrap" style="min-height: 100vh;">
 
-<router-outlet></router-outlet>
+  @if (mostrarSidebar()) {
+    <app-navbar></app-navbar>
+  }
+
+  <main class="w-100 bg-light" [ngClass]="mostrarSidebar() ? 'p-3 p-md-4' : ''" style="min-width: 0; overflow-x: hidden;">
+    <router-outlet></router-outlet>
+  </main>
+
+</div>

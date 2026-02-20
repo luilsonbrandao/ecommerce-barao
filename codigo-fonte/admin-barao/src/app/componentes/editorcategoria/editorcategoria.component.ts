@@ -2,14 +2,13 @@ import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { NavbarComponent } from '../navbar/navbar.component';
 import { Categoria } from '../../models/categoria.model';
 import { CategoriaService } from '../../servicos/categoria.service';
 
 @Component({
   selector: 'app-editorcategoria',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink, NavbarComponent],
+  imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './editorcategoria.component.html',
   styleUrls: ['./editorcategoria.component.css']
 })

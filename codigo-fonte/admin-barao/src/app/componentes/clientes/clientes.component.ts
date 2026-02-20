@@ -2,7 +2,6 @@ import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { NavbarComponent } from '../navbar/navbar.component';
 import { Cliente } from '../../models/cliente.model';
 import { ClienteService } from '../../servicos/cliente.service';
 import { BuscarcepService } from '../../servicos/buscarcep.service';
@@ -10,7 +9,7 @@ import { BuscarcepService } from '../../servicos/buscarcep.service';
 @Component({
   selector: 'app-clientes',
   standalone: true,
-  imports: [CommonModule, FormsModule, NavbarComponent, RouterLink, DatePipe],
+  imports: [CommonModule, FormsModule, RouterLink, DatePipe],
   templateUrl: './clientes.component.html'
 })
 export class ClientesComponent implements OnInit {

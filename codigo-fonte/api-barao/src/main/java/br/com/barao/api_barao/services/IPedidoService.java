@@ -1,5 +1,6 @@
 package br.com.barao.api_barao.services;
 
+import br.com.barao.api_barao.dto.CompradorDTO;
 import br.com.barao.api_barao.dto.FiltroPedidoDTO;
 import br.com.barao.api_barao.dto.VendasPorDataDTO;
 import br.com.barao.api_barao.model.Pedido;
@@ -21,4 +22,5 @@ public interface IPedidoService {
     public List<VendasPorDataDTO> recuperarTotaisUltimaSemana(LocalDate inicio, LocalDate fim);
     public Pedido buscarPeloId(int id);
     public Pedido buscarPeloUuid(String uuid);
+    public List<CompradorDTO> buscarCompradoresDoProduto(int idProduto);
 }

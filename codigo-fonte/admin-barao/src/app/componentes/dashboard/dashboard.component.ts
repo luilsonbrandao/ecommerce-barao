@@ -1,15 +1,17 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NavbarComponent } from '../navbar/navbar.component';
 import { GraficovendasComponent } from '../graficovendas/graficovendas.component';
+import { AniversariantesComponent } from '../aniversariantes/aniversariantes.component';
+import { UltimospedidosComponent } from '../ultimospedidos/ultimospedidos.component';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, NavbarComponent, GraficovendasComponent], 
+  imports: [CommonModule, GraficovendasComponent, AniversariantesComponent, UltimospedidosComponent],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
-export class DashboardComponent {
-
+export class DashboardComponent implements OnInit {
+  constructor() { }
+  ngOnInit(): void { }
 }

@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Produto } from '../models/produto.model';
 import { PathDTO } from '../models/path-dto.model';
+import { CompradorDTO } from '../models/comprador-dto.model';
 
 @Injectable({
   providedIn: 'root'
@@ -40,5 +41,9 @@ export class ProdutoService {
   public uploadFoto(formData: FormData): Observable<PathDTO> {
     // O upload geralmente precisa do Token se a rota for protegida
     return this.http.post<PathDTO>(`${this.apiUrl}/upload`, formData, this.getAuthHeaders());
+  }
+
+  public buscarCompradoresDoProduto(idProduto: number): Observable<CompradorDTO[]> {
+    return this.http.get<CompradorDTO[]>(`http://localhost:8080/pedido/produto/${idProduto}/compradores`, this.getAuthHeaders());
   }
 }

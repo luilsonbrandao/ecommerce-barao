@@ -2,28 +2,43 @@ import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule, CurrencyPipe, DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { NavbarComponent } from '../navbar/navbar.component';
+
+// Importação dos Serviços
 import { PedidoService } from '../../servicos/pedido.service';
+import { FormapagamentoService } from '../../servicos/formapagamento.service';
+import { RegistrofinanceiroService } from '../../servicos/registrofinanceiro.service';
+
+// Importação dos Modelos
 import { Pedido } from '../../models/pedido.model';
 import { FiltroPedidoDTO } from '../../models/filtro-pedido-dto.model';
 import { StatusPedido } from '../../models/status-pedido.model';
+import { FormaPagamento } from '../../models/forma-pagamento.model';
+import { RegistroFinanceiro } from '../../models/registro-financeiro.model';
 
 @Component({
   selector: 'app-pedidos',
   standalone: true,
-  imports: [CommonModule, FormsModule, NavbarComponent, CurrencyPipe, DatePipe],
+  imports: [CommonModule, FormsModule, CurrencyPipe, DatePipe],
   templateUrl: './pedidos.component.html',
   styleUrls: ['./pedidos.component.css']
 })
 export class PedidosComponent implements OnInit {
 
+  // Injeção de Dependências
   private service = inject(PedidoService);
+  private pgtoService = inject(FormapagamentoService);
+  private rfService = inject(RegistrofinanceiroService);
   private router = inject(Router);
 
+  // Variáveis de Controle
   public filtroPedido: FiltroPedidoDTO = {};
   public detalhe: Pedido | null = null;
   public lista: Pedido[] = [];
   public total: number = 0;
+
+  // Variáveis do Modal Financeiro
+  public formasPgto: FormaPagamento[] = [];
+  public registroFinanceiro: RegistroFinanceiro | null = null;
 
   // Expõe o Enum para uso no HTML
   public StatusEnum = StatusPedido;
@@ -52,8 +67,6 @@ export class PedidosComponent implements OnInit {
   }
 
   public filtrarPedidos() {
-    // Como os checkboxes do HTML dão true/false no Angular moderno (e não 1/0),
-    // precisamos converter esses booleanos para os números do StatusPedido.
     const f: FiltroPedidoDTO = {
       dataInicio: this.filtroPedido.dataInicio,
       dataFim: this.filtroPedido.dataFim,
@@ -78,9 +91,17 @@ export class PedidosComponent implements OnInit {
     this.carregarPedidos();
   }
 
-  public abrirDetalhes(pedido: Pedido) {
-    // Clonamos o pedido para não alterar a tabela caso o usuário cancele a edição
-    this.detalhe = JSON.parse(JSON.stringify(pedido));
+  public abrirDetalhes(pedidoResumo: Pedido) {
+    // Agora o Angular chama a rota /detalhes/{id} que criamos no Java
+    this.service.getPedidoCompleto(pedidoResumo.idPedido).subscribe({
+      next: (pedidoCompleto: Pedido) => {
+        this.detalhe = pedidoCompleto;
+      },
+      error: (err) => {
+        console.error(err);
+        alert("Erro ao buscar os detalhes completos do pedido. Verifique o console.");
+      }
+    });
   }
 
   public fecharDetalhes() {
@@ -89,14 +110,13 @@ export class PedidosComponent implements OnInit {
 
   public atualizarPedidoDetalhe() {
     if (this.detalhe) {
-      // Converte a string "1"/"0" do select para number
       this.detalhe.retirar = Number(this.detalhe.retirar);
 
       this.service.atualizarPedido(this.detalhe).subscribe({
         next: () => {
           alert("Pedido alterado com sucesso!");
           this.fecharDetalhes();
-          this.carregarPedidos(); // Recarrega a tabela
+          this.carregarPedidos();
         },
         error: () => alert("Erro ao alterar os dados do pedido.")
       });
@@ -112,16 +132,46 @@ export class PedidosComponent implements OnInit {
     });
   }
 
+  // --- CONTROLE DO FLUXO FINANCEIRO ---
+
   public gerarFinanceiro(pedido: Pedido) {
-    // TODO: Na próxima fase (Financeiro), abriremos o modal real de parcelas.
-    // Por enquanto, apenas avança o status para "Pago" (Status = 2)
-    const confirma = confirm("Deseja marcar este pedido como PAGO?");
-    if (confirma) {
-      this.alterarStatus(pedido, StatusPedido.PAGO);
+    this.pgtoService.recuperarTodasFormasPgto().subscribe({
+      next: (res) => {
+        this.formasPgto = res;
+
+        this.registroFinanceiro = {
+          pedido: pedido,
+          diaVencimento: new Date().getDate(),
+          totalParcelas: 1,
+          formaPagamento: this.formasPgto.length > 0 ? this.formasPgto[0] : {} as FormaPagamento
+        };
+      },
+      error: () => alert("Erro ao carregar as formas de pagamento disponíveis.")
+    });
+  }
+
+  public confirmarFluxoFinanceiro() {
+    if (this.registroFinanceiro && this.registroFinanceiro.pedido) {
+      // Pega o objeto completo da forma de pagamento baseada no ID selecionado no select
+      const formaSelecionada = this.formasPgto.find(f => f.numSeq == Number(this.registroFinanceiro!.formaPagamento?.numSeq));
+      if (formaSelecionada) this.registroFinanceiro.formaPagamento = formaSelecionada;
+
+      this.rfService.gerarRegistroFinanceiro(this.registroFinanceiro).subscribe({
+        next: () => {
+          alert("Fluxo financeiro gerado com sucesso nas contas a receber!");
+          this.alterarStatus(this.registroFinanceiro!.pedido!, StatusPedido.PAGO);
+          this.fecharModalFinanceiro();
+          this.carregarPedidos();
+        },
+        error: () => alert("Erro ao comunicar com o módulo financeiro.")
+      });
     }
   }
 
-  // Método auxiliar para dar cor aos badges no HTML
+  public fecharModalFinanceiro() {
+    this.registroFinanceiro = null;
+  }
+
   public getBadgeClass(status?: number): string {
     switch(status) {
       case StatusPedido.NOVO_PEDIDO: return 'bg-primary';

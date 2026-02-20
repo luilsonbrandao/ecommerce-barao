@@ -2,7 +2,6 @@ import { Component, OnInit, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { NavbarComponent } from '../navbar/navbar.component';
 import { Produto } from '../../models/produto.model';
 import { ProdutoService } from '../../servicos/produto.service';
 import { CompradorDTO } from '../../models/comprador-dto.model';
@@ -10,7 +9,7 @@ import { CompradorDTO } from '../../models/comprador-dto.model';
 @Component({
   selector: 'app-produtos',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink, NavbarComponent],
+  imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './produtos.component.html',
   styleUrls: ['./produtos.component.css']
 })
@@ -51,10 +50,15 @@ export class ProdutosComponent implements OnInit {
   }
 
   public buscarCompradores(idProduto: number) {
-    // TODO: Implementar a chamada real ao ClienteService na Fase 5.
-    // Simulando o retorno para o Modal abrir e não quebrar a tela:
-    this.compradores = [
-      { nome: "Cliente Teste", telefone: "(11) 99999-9999", email: "teste@email.com" }
-    ];
+    // Esvazia a lista para não mostrar clientes antigos enquanto carrega
+    this.compradores = [];
+
+    // Chama a rota nova do Spring Boot
+    this.service.buscarCompradoresDoProduto(idProduto).subscribe({
+      next: (res: CompradorDTO[]) => {
+        this.compradores = res;
+      },
+      error: () => alert("Erro ao buscar a lista de compradores.")
+    });
   }
 }

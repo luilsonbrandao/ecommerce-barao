@@ -1,10 +1,11 @@
 import { Component, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [RouterLink, RouterLinkActive], // RouterLinkActive ajuda a destacar a página atual
+  imports: [CommonModule, RouterLink, RouterLinkActive],
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
@@ -13,8 +14,10 @@ export class NavbarComponent {
   private router = inject(Router);
 
   public logout() {
-    // Removemos o token do Barão Admin em vez do antigo LTRTk
-    localStorage.removeItem("BaraoAdminTk");
-    this.router.navigate(['/login']);
+    const confirma = confirm("Deseja realmente sair do painel administrativo?");
+    if (confirma) {
+      localStorage.removeItem("BaraoAdminTk");
+      this.router.navigate(['/login']);
+    }
   }
 }
