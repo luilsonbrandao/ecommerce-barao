@@ -5,18 +5,17 @@ import { Produto } from '../models/produto.model';
 import { PaginaProduto } from '../models/pagina-produto.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ProdutoService {
   private http = inject(HttpClient);
 
-  private apiUrl = 'http://localhost:8080/produto';
+  private apiUrl =
+    'https://interlocutorily-thermonuclear-toshia.ngrok-free.dev/produto';
 
-  constructor() { }
-
+  constructor() {}
 
   public getAllProdutos(page: number = 0): Observable<PaginaProduto> {
-
     return this.http.get<PaginaProduto>(`${this.apiUrl}?page=${page}`);
   }
 
@@ -25,13 +24,18 @@ export class ProdutoService {
     return this.http.get<Produto>(`${this.apiUrl}/${id}`);
   }
 
-
   buscarPorTermo(termo: string, page: number = 0): Observable<PaginaProduto> {
-      return this.http.get<PaginaProduto>(`${this.apiUrl}/busca?key=${termo}&page=${page}`);
+    return this.http.get<PaginaProduto>(
+      `${this.apiUrl}/busca?key=${termo}&page=${page}`,
+    );
   }
 
-  public buscarPorCategoria(idCategoria: number, page: number = 0): Observable<PaginaProduto> {
-    return this.http.get<PaginaProduto>(`${this.apiUrl}/categoria/${idCategoria}?page=${page}`);
+  public buscarPorCategoria(
+    idCategoria: number,
+    page: number = 0,
+  ): Observable<PaginaProduto> {
+    return this.http.get<PaginaProduto>(
+      `${this.apiUrl}/categoria/${idCategoria}?page=${page}`,
+    );
   }
-
 }

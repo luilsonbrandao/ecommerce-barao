@@ -1,5 +1,6 @@
 package br.com.barao.api_barao.security;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -8,6 +9,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 // Swagger Imports
 import io.swagger.v3.oas.models.Components;
@@ -19,7 +22,19 @@ import java.util.List;
 
 @Configuration
 @EnableWebSecurity
-public class MyWebApplicationSecurityConfig {
+public class MyWebApplicationSecurityConfig implements WebMvcConfigurer { // <-- 1. Contrato Adicionado!
+
+    // <-- 2. Configuração do Garçom de Imagens -->
+    @Value("${app.upload.dir}")
+    private String uploadDir;
+
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        // Toda vez que a Vercel pedir um link com "/imagens/...",
+        // o Java vai buscar fisicamente na sua pasta do Linux!
+        registry.addResourceHandler("/imagens/**")
+                .addResourceLocations("file:" + uploadDir + "/");
+    }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -45,7 +60,10 @@ public class MyWebApplicationSecurityConfig {
                         // --- 2. Recursos Estáticos e Documentação (Swagger) ---
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html").permitAll()
 
-                        // --- 3. Regras de Negócio Públicas (GET) ---
+                        // ---> 3. A MÁGICA AQUI: LIBERANDO ACESSO PÚBLICO ÀS IMAGENS <---
+                        .requestMatchers(HttpMethod.GET, "/imagens/**").permitAll()
+
+                        // --- 4. Regras de Negócio Públicas (GET) ---
                         .requestMatchers(HttpMethod.GET, "/categoria", "/categoria/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/produto", "/produto/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/fretes", "/fretes/**", "/fretesdisponiveis").permitAll()
@@ -56,11 +74,11 @@ public class MyWebApplicationSecurityConfig {
                         // Pedidos: Busca pública (se for regra de negócio)
                         .requestMatchers(HttpMethod.GET, "/pedido/search/**").permitAll()
 
-                        // --- 4. Ações Públicas (POST) ---
+                        // --- 5. Ações Públicas (POST) ---
                         .requestMatchers(HttpMethod.POST, "/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/pedido").permitAll() // Criar pedido é público
 
-                        // --- 5. Todo o resto exige autenticação (Token JWT) ---
+                        // --- 6. Todo o resto exige autenticação (Token JWT) ---
                         .anyRequest().authenticated()
                 )
 

@@ -5,19 +5,23 @@ import { Frete } from '../models/frete.model';
 import { TokenService } from './token.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class FreteService {
   private http = inject(HttpClient);
   private tokenSrv = inject(TokenService);
-  private apiUrl = 'http://localhost:8080/fretes';
+  private apiUrl =
+    'https://interlocutorily-thermonuclear-toshia.ngrok-free.dev/fretes';
 
   public recuperarTodos(): Observable<Frete[]> {
     return this.http.get<Frete[]>(this.apiUrl, this.tokenSrv.getHeader());
   }
 
   public recuperarPeloId(id: number): Observable<Frete> {
-    return this.http.get<Frete>(`${this.apiUrl}/${id}`, this.tokenSrv.getHeader());
+    return this.http.get<Frete>(
+      `${this.apiUrl}/${id}`,
+      this.tokenSrv.getHeader(),
+    );
   }
 
   public inserirFrete(frete: Frete): Observable<Frete> {

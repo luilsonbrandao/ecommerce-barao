@@ -5,12 +5,12 @@ import { JWTToken } from '../models/JWTToken';
 import { Usuario } from '../models/Usuario';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class LoginService {
-
   private http = inject(HttpClient);
-  private apiUrl = 'http://localhost:8080/login';
+  private apiUrl =
+    'https://interlocutorily-thermonuclear-toshia.ngrok-free.dev/login';
 
   public logarUsuario(user: Usuario): Observable<JWTToken> {
     return this.http.post<JWTToken>(this.apiUrl, user);

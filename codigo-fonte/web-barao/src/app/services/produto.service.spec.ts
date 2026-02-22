@@ -4,16 +4,17 @@ import { Observable } from 'rxjs';
 import { Produto } from '../models/produto.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ProdutoService {
   // injeta dependências no Angular 17+
   private http = inject(HttpClient);
 
-  // URL da sua API Java 
-  private apiUrl = 'http://localhost:8080/produtos';
+  // URL da sua API Java
+  private apiUrl =
+    'https://interlocutorily-thermonuclear-toshia.ngrok-free.dev/produtos';
 
-  constructor() { }
+  constructor() {}
 
   // Buscar todos os produtos para a Home
   listarTodos(): Observable<Produto[]> {

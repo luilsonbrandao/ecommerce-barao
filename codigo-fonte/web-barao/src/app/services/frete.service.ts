@@ -6,7 +6,8 @@ import { Frete } from '../models/frete.model';
 @Injectable({ providedIn: 'root' })
 export class FreteService {
   private http = inject(HttpClient);
-  private apiUrl = 'http://localhost:8080/fretes';
+  private apiUrl =
+    'https://interlocutorily-thermonuclear-toshia.ngrok-free.dev/fretes';
 
   public recuperarPorPrefixo(prefixo: string): Observable<Frete> {
     // Tenta buscar do back-end. Se der erro no componente, ele trata.
